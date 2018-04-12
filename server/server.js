@@ -10,6 +10,10 @@ app.use(express.static(path.join(__dirname, '/../client')));
 //
 // });
 
+// app.post('/product/:productId/addtocart', (req, res) => {
+//
+// });
+
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });

@@ -1,0 +1,53 @@
+body {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 12px;
+}
+
+.cart {
+  box-sizing: border-box;
+  background-color: red;
+  height: 2.5em;
+  width: 2.5em;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  line-height: 2.5em;
+  cursor: pointer;
+}
+
+.quickadd {
+  display: flex;
+  flex-flow: column;
+  height: auto;
+  width: 400px;
+  margin: 50px 0 0 0;
+}
+
+.quickadd-select {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.quickadd-dropdown {
+  height: 3rem;
+  width: 48%;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: transparent;
+  border: 2px solid grey;
+  cursor: pointer;
+}
+
+.quickadd-button-add {
+  height: 2.5em;
+  width: 100%;
+  font-weight: bold;
+  font-size: 20px;
+  color: white;
+  border: 0px none white;
+  background-color: red;
+  cursor: pointer;
+}
