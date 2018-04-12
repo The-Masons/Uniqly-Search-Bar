@@ -1,0 +1,15 @@
+body {
+  font-family: "Fira Sans", sans-serif;
+}
+
+.cart {
+  display: border-box;
+  background-color: red;
+  height: 45px;
+  width: 45px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  line-height: 45px;
+}
