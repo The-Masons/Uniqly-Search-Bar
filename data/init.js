@@ -16,38 +16,38 @@ pool.on('error', (err) => {
 const createTables = () => {
   const tableQueries = [
     `CREATE TABLE IF NOT EXISTS names (
-      id INT PRIMARY KEY,
+      name_id INT PRIMARY KEY,
       name TEXT
     );`,
     `CREATE TABLE IF NOT EXISTS colors (
-      id INT PRIMARY KEY,
+      color_id INT PRIMARY KEY,
       name TEXT
     );`,
     `CREATE TABLE IF NOT EXISTS sizes (
-      id INT PRIMARY KEY,
+      size_id INT PRIMARY KEY,
       name TEXT
     );`,
     `CREATE TABLE IF NOT EXISTS products (
-      id INT PRIMARY KEY,
+      product_id INT PRIMARY KEY,
       name_id INT,
       color_id INT,
       price INT,
-      FOREIGN KEY (name_id) REFERENCES names(id),
-      FOREIGN KEY (color_id) REFERENCES colors(id)
+      FOREIGN KEY (name_id) REFERENCES names,
+      FOREIGN KEY (color_id) REFERENCES colors
     );`,
     `CREATE TABLE IF NOT EXISTS images (
-      id INT PRIMARY KEY,
+      img_id INT PRIMARY KEY,
       img_url TEXT,
       product_id INT,
       isPrimary BOOLEAN,
-      FOREIGN KEY (product_id) REFERENCES products(id)
+      FOREIGN KEY (product_id) REFERENCES products
     );`,
     `CREATE TABLE IF NOT EXISTS products_sizes (
       product_id INT,
       size_id INT,
       quantity INT,
-      FOREIGN KEY (product_id) REFERENCES products(id),
-      FOREIGN KEY (size_id) REFERENCES sizes(id)
+      FOREIGN KEY (product_id) REFERENCES products,
+      FOREIGN KEY (size_id) REFERENCES sizes
     );`,
   ];
 
@@ -99,7 +99,7 @@ const createTables = () => {
 };
 
 const populateTwoField = (table, name, numRows) => {
-  const queryText = 'INSERT INTO $1(id, name) VALUES($2, $3)';
+  const queryText = `INSERT INTO ${table}s(${table}_id, name) VALUES($1, $2)`;
   let entryName = '';
   return Promise.all((() => {
     const promises = [];
@@ -107,7 +107,7 @@ const populateTwoField = (table, name, numRows) => {
       entryName = `${name} ${i}`;
       promises.push(pool.connect()
         .then(client =>
-          client.query(queryText, [table, i, entryName])
+          client.query(queryText, [i, entryName])
             .then(() => client.release())
             .catch((err) => {
               client.release();
@@ -119,7 +119,7 @@ const populateTwoField = (table, name, numRows) => {
 };
 
 const populateProducts = (numNames, numColors) => {
-  const queryText = 'INSERT INTO products(id, name_id, color_id, price) VALUES($1, $2, $3, $4)';
+  const queryText = `INSERT INTO products(product_id, name_id, color_id, price) VALUES($1, $2, $3, $4)`;
   const numRows = numNames * numColors;
   let currName = 0;
   let currColor = 0;
@@ -142,7 +142,7 @@ const populateProducts = (numNames, numColors) => {
 };
 
 const populateImages = (numRows) => {
-  const queryText = 'INSERT INTO images(id, img_url, product_id, isPrimary) VALUES($1, $2, $3, $4)';
+  const queryText = `INSERT INTO images(img_id, img_url, product_id, isPrimary) VALUES($1, $2, $3, $4)`;
   return Promise.all((() => {
     const promises = [];
     for (let i = 0; i < numRows; i += 1) {
@@ -160,7 +160,7 @@ const populateImages = (numRows) => {
 };
 
 const populateProdsSizes = (numProds, numSizes) => {
-  const queryText = 'INSERT INTO products_sizes(product_id, size_id, quantity) VALUES($1, $2, $3)';
+  const queryText = `INSERT INTO products_sizes(product_id, size_id, quantity) VALUES($1, $2, $3)`;
   const numRows = numProds * numSizes;
   let currProd = 0;
   let currSize = 0;
@@ -173,7 +173,7 @@ const populateProdsSizes = (numProds, numSizes) => {
             .then(() => client.release())
             .catch((err) => {
               client.release();
-              console.log(err.stack);
+              console.log(err);
             })));
       currProd = currProd < numProds - 1 ? currProd + 1 : 0;
       currSize = currSize < numSizes - 1 ? currSize + 1 : 0;
@@ -183,11 +183,9 @@ const populateProdsSizes = (numProds, numSizes) => {
 };
 
 createTables()
-  .then(() => Promise.all((() => [
-    populateTwoField('names', 'Product Name', 25),
-    populateTwoField('colors', 'Color', 4),
-    populateTwoField('sizes', 'Size', 5),
-  ])()))
+  .then(() => populateTwoField('name', 'Product Name', 25))
+  .then(() => populateTwoField('color', 'Color', 4))
+  .then(() => populateTwoField('size', 'Size', 5))
   .then(() => populateProducts(25, 4))
   .then(() => populateImages(100))
   .then(() => populateProdsSizes(100, 5))
