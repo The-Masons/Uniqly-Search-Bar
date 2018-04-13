@@ -100,11 +100,10 @@ const createTables = () => {
 
 const populateTwoField = (table, name, numRows) => {
   const queryText = `INSERT INTO ${table}s(${table}_id, name) VALUES($1, $2)`;
-  let entryName = '';
   return Promise.all((() => {
     const promises = [];
     for (let i = 0; i < numRows; i += 1) {
-      entryName = `${name} ${i}`;
+      let entryName = `${name} ${i}`;
       promises.push(pool.connect()
         .then(client =>
           client.query(queryText, [i, entryName])
@@ -119,30 +118,31 @@ const populateTwoField = (table, name, numRows) => {
 };
 
 const populateProducts = (numNames, numColors) => {
-  const queryText = `INSERT INTO products(product_id, name_id, color_id, price) VALUES($1, $2, $3, $4)`;
+  const queryText = 'INSERT INTO products(product_id, name_id, color_id, price) VALUES($1, $2, $3, $4)';
   const numRows = numNames * numColors;
-  let currName = 0;
-  let currColor = 0;
   return Promise.all((() => {
     const promises = [];
+    let currName = 0;
+    let currColor = 0;
     for (let i = 0; i < numRows; i += 1) {
       promises.push(pool.connect()
-        .then(client =>
+        .then(client => {
           client.query(queryText, [i, currName, currColor, Math.floor(Math.random() * 10000)])
             .then(() => client.release())
             .catch((err) => {
               client.release();
               console.log(err.stack);
-            })));
-      currName = currName < numNames - 1 ? currName + 1 : 0;
-      currColor = currColor < numColors - 1 ? currColor + 1 : 0;
+            })
+          currName = currName < numNames - 1 ? currName + 1 : 0;
+          currColor = currColor < numColors - 1 ? currColor + 1 : 0;
+        }));
     }
     return promises;
   })());
 };
 
 const populateImages = (numRows) => {
-  const queryText = `INSERT INTO images(img_id, img_url, product_id, isPrimary) VALUES($1, $2, $3, $4)`;
+  const queryText = 'INSERT INTO images(img_id, img_url, product_id, isPrimary) VALUES($1, $2, $3, $4)';
   return Promise.all((() => {
     const promises = [];
     for (let i = 0; i < numRows; i += 1) {
@@ -160,23 +160,24 @@ const populateImages = (numRows) => {
 };
 
 const populateProdsSizes = (numProds, numSizes) => {
-  const queryText = `INSERT INTO products_sizes(product_id, size_id, quantity) VALUES($1, $2, $3)`;
+  const queryText = 'INSERT INTO products_sizes(product_id, size_id, quantity) VALUES($1, $2, $3)';
   const numRows = numProds * numSizes;
-  let currProd = 0;
-  let currSize = 0;
   return Promise.all((() => {
     const promises = [];
+    let currProd = 0;
+    let currSize = 0;
     for (let i = 0; i < numRows; i += 1) {
       promises.push(pool.connect()
-        .then(client =>
+        .then(client => {
           client.query(queryText, [currProd, currSize, Math.floor(Math.random() * 150)])
             .then(() => client.release())
             .catch((err) => {
               client.release();
               console.log(err);
-            })));
-      currProd = currProd < numProds - 1 ? currProd + 1 : 0;
-      currSize = currSize < numSizes - 1 ? currSize + 1 : 0;
+            })
+          currProd = currProd < numProds - 1 ? currProd + 1 : 0;
+          currSize = currSize < numSizes - 1 ? currSize + 1 : 0;
+        }));
     }
     return promises;
   })());
