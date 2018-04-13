@@ -133,8 +133,8 @@ const populateProducts = (numNames, numColors) => {
               client.release();
               console.log(err.stack);
             })
-          currName = currName < numNames - 1 ? currName + 1 : 0;
           currColor = currColor < numColors - 1 ? currColor + 1 : 0;
+          currName = currColor === 0 ? currName + 1 : currName;
         }));
     }
     return promises;
