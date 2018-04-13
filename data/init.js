@@ -161,23 +161,21 @@ const populateImages = (numRows) => {
 
 const populateProdsSizes = (numProds, numSizes) => {
   const queryText = 'INSERT INTO products_sizes(product_id, size_id, quantity) VALUES($1, $2, $3)';
-  const numRows = numProds * numSizes;
   return Promise.all((() => {
     const promises = [];
     let currProd = 0;
     let currSize = 0;
-    for (let i = 0; i < numRows; i += 1) {
-      promises.push(pool.connect()
-        .then(client => {
+    for (let currProd = 0; currProd < numProds; currProd += 1) {
+      for (let currSize = 0; currSize < numSizes; currSize += 1) {
+        promises.push(pool.connect()
+        .then(client =>
           client.query(queryText, [currProd, currSize, Math.floor(Math.random() * 150)])
-            .then(() => client.release())
-            .catch((err) => {
-              client.release();
-              console.log(err);
-            })
-          currProd = currProd < numProds - 1 ? currProd + 1 : 0;
-          currSize = currSize < numSizes - 1 ? currSize + 1 : 0;
-        }));
+          .then(() => client.release())
+          .catch((err) => {
+            client.release();
+            console.log(err);
+          })));
+      }
     }
     return promises;
   })());
