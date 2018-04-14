@@ -47,9 +47,12 @@ describe('createTables', () => {
     ];
 
     const pool = new Pool();
-    initScripts.createTables()
-      .then(() => {
-        expect(pool.connect).toHaveBeenCalledTimes(6);
-      });
-  });
+    const poolConnect = Pool.prototype.connect;
+    // const clientQuery
+
+    return initScripts.createTables().then(() => {
+        expect(poolConnect).toHaveBeenCalledTimes(6);
+        // for (let i = 0; i < Pool.prototype.mockQuery.calls.length)
+      }
+    )});
 });
