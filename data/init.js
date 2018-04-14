@@ -51,7 +51,7 @@ const createTables = () => {
     );`,
   ];
 
-  const createFirstThree = () => {
+  return Promise.all((() => {
     const promises = [];
     for (let i = 0; i < 3; i += 1) {
       promises.push(pool.connect()
@@ -67,27 +67,7 @@ const createTables = () => {
             })));
     }
     return promises;
-  };
-
-  const createLastTwo = () => {
-    const promises = [];
-    for (let i = 4; i < tableQueries.length; i += 1) {
-      promises.push(pool.connect()
-        .then(client =>
-          client.query(tableQueries[i])
-            .then(() => {
-              client.release();
-              console.log('Table created');
-            })
-            .catch((err) => {
-              client.release();
-              console.log(err.stack);
-            })));
-    }
-    return promises;
-  };
-
-  return Promise.all(createFirstThree())
+  })())
     .then(() => pool.connect()
       .then(client =>
         client.query(tableQueries[3])
@@ -99,10 +79,23 @@ const createTables = () => {
             client.release();
             console.log(err.stack);
           })))
-    .then(() => {
-      Promise.all(createLastTwo())
-        .catch(err => console.log(err))
-    });
+    .then(() => Promise.all((() => {
+      const promises = [];
+      for (let i = 4; i < tableQueries.length; i += 1) {
+        promises.push(pool.connect()
+          .then(client =>
+            client.query(tableQueries[i])
+              .then(() => {
+                client.release();
+                console.log('Table created');
+              })
+              .catch((err) => {
+                client.release();
+                console.log(err.stack);
+              })));
+      }
+      return promises;
+    })())).catch(err => console.log(err));
 };
 
 const populateTwoField = (table, name, numRows) => {
@@ -186,7 +179,7 @@ const populateProdsSizes = (numProds, numSizes) => {
   })());
 };
 
-// Uncomment to generate tables
+// Uncomment to generate data (conflicts with tests)
 // createTables()
 //   .then(() => populateTwoField('name', 'Product Name', 25))
 //   .then(() => populateTwoField('color', 'Color', 4))
