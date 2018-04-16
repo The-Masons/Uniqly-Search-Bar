@@ -6,6 +6,9 @@ jest.mock('pg-pool');
 describe('createTables', () => {
   beforeEach(() => {
     Pool.mockClear();
+    Pool.prototype.connect.mockClear();
+    Pool.prototype.mockQuery.mockClear();
+    Pool.prototype.mockRelease.mockClear();
   });
 
   test('should query the db to create each table', () => {
@@ -48,11 +51,22 @@ describe('createTables', () => {
 
     const pool = new Pool();
     const poolConnect = Pool.prototype.connect;
-    // const clientQuery
+    const clientQuery = Pool.prototype.mockQuery;
 
     return initScripts.createTables().then(() => {
-        expect(poolConnect).toHaveBeenCalledTimes(6);
-        // for (let i = 0; i < Pool.prototype.mockQuery.calls.length)
+      expect(poolConnect).toHaveBeenCalledTimes(6);
+      for (let i = 0; i < tableQueries.length; i += 1) {
+        expect(clientQuery.mock.calls[i][0].split(' ').filter(word => word !== ''))
+          .toEqual(tableQueries[i].split(' ').filter(word => word !== ''));
       }
-    )});
+    })});
+
+  test('should release all clients back in the pool', () => {
+    const pool = new Pool();
+    const clientRelease = Pool.prototype.mockRelease;
+
+    return initScripts.createTables().then(() => {
+      expect(clientRelease).toHaveBeenCalledTimes(6);
+    });
+  });
 });

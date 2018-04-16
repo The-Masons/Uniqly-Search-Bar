@@ -59,7 +59,6 @@ const createTables = () => {
           client.query(tableQueries[i])
             .then(() => {
               client.release();
-              console.log('Table created');
             })
             .catch((err) => {
               client.release();
@@ -73,7 +72,6 @@ const createTables = () => {
         client.query(tableQueries[3])
           .then(() => {
             client.release();
-            console.log('Table created');
           })
           .catch((err) => {
             client.release();
@@ -87,7 +85,6 @@ const createTables = () => {
             client.query(tableQueries[i])
               .then(() => {
                 client.release();
-                console.log('Table created');
               })
               .catch((err) => {
                 client.release();

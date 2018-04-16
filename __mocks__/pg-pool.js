@@ -2,7 +2,7 @@ const Pool = jest.genMockFromModule('pg-pool');
 
 const mockQuery = jest.fn().mockReturnValue(new Promise(resolve => resolve()));
 
-const mockRelease = jest.fn().mockReturnValue(new Promise(resolve => resolve()));
+const mockRelease = jest.fn();
 
 const connect = jest.fn().mockReturnValue(new Promise(resolve => resolve({
   query: mockQuery,
