@@ -12,5 +12,12 @@
     "node": true,
     "jquery": true,
   },
-  "extends": "airbnb"
+  "extends": "airbnb",
+  "rules": {
+    "no-console": "off",
+    "max-len": "off",
+    "no-undef": "off",
+    "no-unused-vars": "off",
+    "no-loop-func": "off"
+  }
 }
