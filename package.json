@@ -7,18 +7,22 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "server-dev": "nodemon server/server.js",
+    "server-dev": "nodemon server/index.js",
     "react-dev": "webpack -d --watch",
-    "lint": "eslint ./"
+    "lint": "eslint ./",
+    "test": "jest --coverage"
   },
   "dependencies": {
     "express": "^4.16.3",
     "jquery": "^3.3.1",
+    "pg": "^7.4.1",
+    "pg-pool": "^2.0.3",
     "react": "^16.3.1",
     "react-dom": "^16.3.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-jest": "^22.4.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
@@ -28,12 +32,14 @@
     "eslint-plugin-import": "^2.10.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
+    "jest": "^22.4.3",
     "nodemon": "^1.17.3",
+    "regenerator-runtime": "^0.11.1",
     "webpack": "^4.5.0",
     "webpack-cli": "^2.0.14"
   },
   "version": "1.0.0",
-  "main": "server/server.js",
+  "main": "server/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/The-Masons/Uniqly-Search-Bar.git"
