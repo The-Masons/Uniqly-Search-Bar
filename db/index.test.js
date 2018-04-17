@@ -30,4 +30,11 @@ describe('getSizesQtys', () => {
 
     return db.getSizesQtys(0, mockCallback).then(() => expect(mockCallback).toHaveBeenCalledTimes(1));
   });
+
+  test('should release clients back into the pool', () => {
+    const pool = new Pool();
+    const clientRelease = Pool.prototype.mockRelease;
+
+    return db.getSizesQtys(0, () => {}).then(() => expect(clientRelease).toHaveBeenCalledTimes(1));
+  });
 });
