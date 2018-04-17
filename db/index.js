@@ -1,7 +1,12 @@
 const Pool = require('pg-pool');
-const pgConfig = require.resolve('./config') === __dirname + '/config.js' ? require('./config.js') : {};
 
-const pool = new Pool(pgConfig);
+const pool = new Pool({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'uniqly',
+  password: process.env.PGPASSWORD,
+  port: process.env.PGPORT,
+});
 
 pool.on('error', (err) => {
   console.error('Unexpected error on idle client', err);
