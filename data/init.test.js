@@ -95,19 +95,77 @@ describe('populateTwoField', () => {
 });
 
 describe('populateProducts', () => {
-  test('should correctly query the db to create rows', () => {});
-  test('should query the db the correct amount of times', () => {});
-  test('should release all clients back into the pool', () => {});
+  test('should correctly query the db to create rows', () => {
+    const pool = new Pool();
+    const clientQuery = Pool.prototype.mockQuery;
+    const queryText = 'INSERT INTO products(product_id, name_id, color_id, price) VALUES($1, $2, $3, $4)';
+    Math.floor = jest.fn().mockReturnValue(42);
+
+    return initScripts.populateProducts(1, 1).then(() => expect(clientQuery)
+      .toHaveBeenCalledWith(queryText, [0, 0, 0, 42]));
+  });
+
+  test('should query the db the correct amount of times', () => {
+    const pool = new Pool();
+    const clientQuery = Pool.prototype.mockQuery;
+
+    return initScripts.populateProducts(10, 3).then(() => expect(clientQuery).toHaveBeenCalledTimes(30));
+  });
+
+  test('should release all clients back into the pool', () => {
+    const pool = new Pool();
+    const clientRelease = Pool.prototype.mockRelease;
+
+    return initScripts.populateProducts(10, 3).then(() => expect(clientRelease).toHaveBeenCalledTimes(30));
+  });
 });
 
 describe('populateImages', () => {
-  test('should correctly query the db to create rows', () => {});
-  test('should query the db the correct amount of times', () => {});
-  test('should release all clients back into the pool', () => {});
+  test('should correctly query the db to create rows', () => {
+    const pool = new Pool();
+    const clientQuery = Pool.prototype.mockQuery;
+    const queryText = 'INSERT INTO images(img_id, img_url, product_id, isPrimary) VALUES($1, $2, $3, $4)';
+
+    return initScripts.populateImages(1).then(() => expect(clientQuery)
+      .toHaveBeenCalledWith(queryText, [0, 'http://placecorgi.com/250', 0, true]));
+  });
+
+  test('should query the db the correct amount of times', () => {
+    const pool = new Pool();
+    const clientQuery = Pool.prototype.mockQuery;
+
+    return initScripts.populateImages(15).then(() => expect(clientQuery).toHaveBeenCalledTimes(15));
+  });
+
+  test('should release all clients back into the pool', () => {
+    const pool = new Pool();
+    const clientRelease = Pool.prototype.mockRelease;
+
+    return initScripts.populateImages(15).then(() => expect(clientRelease).toHaveBeenCalledTimes(15));
+  });
 });
 
 describe('populateProdsSizes', () => {
-  test('should correctly query the db to create rows', () => {});
-  test('should query the db the correct amount of times', () => {});
-  test('should release all clients back into the pool', () => {});
+  test('should correctly query the db to create rows', () => {
+    const pool = new Pool();
+    const clientQuery = Pool.prototype.mockQuery;
+    const queryText = 'INSERT INTO products_sizes(product_id, size_id, quantity) VALUES($1, $2, $3)';
+    Math.floor = jest.fn().mockReturnValue(42);
+
+    return initScripts.populateProdsSizes(1, 1).then(() => expect(clientQuery)
+      .toHaveBeenCalledWith(queryText, [0, 0, 42]));
+  });
+
+  test('should query the db the correct amount of times', () => {
+    const pool = new Pool();
+    const clientQuery = Pool.prototype.mockQuery;
+
+    return initScripts.populateProdsSizes(10, 2).then(() => expect(clientQuery).toHaveBeenCalledTimes(20));
+  });
+  test('should release all clients back into the pool', () => {
+    const pool = new Pool();
+    const clientRelease = Pool.prototype.mockRelease;
+
+    return initScripts.populateProdsSizes(10, 2).then(() => expect(clientRelease).toHaveBeenCalledTimes(20));
+  });
 });
