@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Cart = (props) => (
-  <div className="cart">
+const MiniCart = (props) => (
+  <div className="minicart">
     <span>0</span>
   </div>
 );
 
-export default Cart;
+export default MiniCart;

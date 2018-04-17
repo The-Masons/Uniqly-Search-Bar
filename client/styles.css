@@ -3,7 +3,7 @@ body {
   font-size: 12px;
 }
 
-.cart {
+.minicart {
   box-sizing: border-box;
   background-color: red;
   height: 2.5em;
