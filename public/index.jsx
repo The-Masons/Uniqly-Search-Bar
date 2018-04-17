@@ -8,6 +8,33 @@ import QuickAdd from './components/quickadd.jsx';
 class QuickCart extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      currentItem: 0,
+      sizes: [],
+      quantities: {},
+    };
+  }
+
+  componentDidMount() {
+    $.ajax({
+      url: `product/${this.state.currentItem}`,
+      method: 'GET',
+      success: (data) => {
+        this.setState({
+          sizes: data.sizes,
+          quantities: data.quantities,
+        });
+      },
+      error: (err) => {
+        this.setState({
+          sizes: ['ERROR'],
+          quantities: {
+            ERROR: -1,
+          },
+        });
+        console.log('Error', err);
+      },
+    });
   }
 
   render() {
