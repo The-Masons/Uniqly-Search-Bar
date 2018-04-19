@@ -37,13 +37,9 @@ describe('QuickAdd', () => {
       }}/>
     );
 
+    expect(quickAdd.find('.quickadd-select-quantity').children().length).toEqual(99);
     quickAdd.find('.quickadd-select-sizes').simulate('change', {target: {value: 'Fake Size 0'}});
     expect(quickAdd.state('currentSize')).toEqual('Fake Size 0');
-    expect(quickAdd.containsMatchingElement(
-      <option key='qtyOpt9'>10</option>
-    )).toEqual(true);
-    expect(quickAdd.containsMatchingElement(
-      <option key='qtyOpt10'>11</option>
-    )).toEqual(false);
+    expect(quickAdd.find('.quickadd-select-quantity').children().length).toEqual(10);
   });
 });
