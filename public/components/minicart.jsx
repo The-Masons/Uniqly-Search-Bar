@@ -5,37 +5,84 @@ class MiniCart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cart: [],
-      cartSize: 0,
-      viewClass: 'minicart-view empty hidden',
+      cart: this.props.cart || {},
+      cartSize: this.props.cartSize || 0,
+      cartOrder: this.props.cartOrder || [],
+      viewClass: this.props.cartSize > 0 ? 'minicart-view hidden' : 'minicart-view empty hidden',
       timeoutID: '',
     };
 
     this.generateMiniCart = this.generateMiniCart.bind(this);
     this.showCart = this.showCart.bind(this);
+    this.hideCart = this.hideCart.bind(this);
   }
 
   showCart() {
-    const debounce = () => {
-      if (this.state.timeoutID) {
-        clearTimeout(this.state.timeoutID);
-      }
-      const newTimeoutID = setTimeout(() => this.setState({
-        viewClass: this.state.viewClass + ' hidden',
-      }), 5000);
-      this.setState({
-        timeoutID: newTimeoutID,
-      });
-    };
+    if (this.state.timeoutID) {
+      clearTimeout(this.state.timeoutID);
+    }
 
     this.setState({
       viewClass: this.state.viewClass.replace(' hidden', ''),
-    }, debounce);
+    });
   }
 
-  generateMiniCart(cart) {
-    if (cart.length > 0) {
+  hideCart() {
+    if (this.state.timeoutID) {
+      clearTimeout(this.state.timeoutID);
+    }
 
+    const newTimeoutID = setTimeout(() => this.setState({
+      viewClass: this.state.viewClass + ' hidden',
+    }), 5000);
+
+    this.setState({
+      timeoutID: newTimeoutID,
+    });
+  }
+
+  calculateTotal() {
+    let sum = 0;
+    for (let key in this.state.cart) {
+      sum += this.state.cart[key].price * this.state.cart[key].quantity;
+    }
+    return sum;
+  }
+
+  generateMiniCart(cartSize) {
+    if (cartSize > 0) {
+      const newCart = [];
+
+      for (let i = 0; i < this.state.cartOrder.length; i += 1) {
+        const currItem = this.state.cartOrder[i];
+        newCart.push(
+          <div className="cart-item" key={'cartItem' + i}>
+            <img className="cart-item-img" src={this.state.cart[currItem].imgUrl}/>
+            <div className="cart-item-info">
+              <span className="cart-item-info name">{this.state.cart[currItem].name}</span>
+              <span className="cart-item-info qty">{this.state.cart[currItem].quantity}</span>
+              <span className="cart-item-info color">{this.state.cart[currItem].color}</span>
+              <span className="cart-item-info size">{this.state.cart[currItem].size}</span>
+            </div>
+            <span className="cart-item-price">${this.state.cart[currItem].price / 100}</span>
+          </div>
+        );
+      }
+
+      return [
+        <div className="minicart-user-cart" key="userCart">
+          {newCart}
+        </div>,
+        <div className="minicart-total" key="cartTotal">
+          <span className="total-item-count">TOTAL ({this.state.cartSize} ITEMS)</span>
+          <span className="total-subtotal">${this.calculateTotal() / 100}</span>
+        </div>,
+        <div className="minicart-cart-controls" key="cartControls">
+          <button className="minicart-view-cart-btn">VIEW BAG</button>
+          <button className="minicart-checkout-btn">CHECKOUT</button>
+        </div>,
+        <span className="minicart-close-btn" key="closeBag">CLOSE BAG</span>,
+      ];
     } else {
       return 'YOUR BAG IS EMPTY';
     }
@@ -44,14 +91,15 @@ class MiniCart extends React.Component {
   render() {
     return (
       <div className="minicart">
-        <div
-          className="minicart-icon"
-          onMouseEnter={this.showCart}
-          >
+        <div className="minicart-icon"
+            onMouseEnter={this.showCart}
+            onMouseLeave={this.hideCart}>
           <span>{this.state.cartSize}</span>
         </div>
-        <div className={this.state.viewClass}>
-          {this.generateMiniCart(this.state.cart)}
+        <div className={this.state.viewClass}
+          onMouseEnter={this.showCart}
+          onMouseLeave={this.hideCart}>
+          {this.generateMiniCart(this.state.cartSize)}
         </div>
       </div>
     );

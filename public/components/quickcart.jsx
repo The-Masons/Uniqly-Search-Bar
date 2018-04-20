@@ -53,7 +53,36 @@ class QuickCart extends React.Component {
   render() {
     return (
       <div className="quickCart">
-        <MiniCart />
+        <MiniCart
+          cart={{
+            'Fake 1': {
+              name: 'Dog Shirt',
+              color: 'Dog Color',
+              quantity: 2,
+              size: 'Small Dog Size',
+              price: 9999,
+              imgUrl: 'http://placecorgi.com/250'
+            },
+            'Fake 2': {
+              name: 'Cat Shirt',
+              color: 'Cat Color',
+              quantity: 1,
+              size: 'Cat Size',
+              price: 5099,
+              imgUrl: 'http://placecorgi.com/250'
+            },
+            'Fake 3': {
+              name: 'Some Pants',
+              color: 'Pants Color',
+              quantity: 1,
+              size: 'Human Size',
+              price: 1599,
+              imgUrl: 'http://placecorgi.com/250'
+            },
+          }}
+          cartSize={4}
+          cartOrder={['Fake 1', 'Fake 3', 'Fake 2']}
+          />
         <QuickAdd sizes={this.state.sizes} quantities={this.state.quantities}/>
       </div>
     );
