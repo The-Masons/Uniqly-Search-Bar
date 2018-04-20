@@ -10,41 +10,45 @@ class QuickCart extends React.Component {
     super(props);
     this.state = {
       currentItem: 0,
-      sizes: [
-        'Fake Size 0',
-        'Fake Size 1',
-        'Fake Size 2',
-      ],
-      quantities: {
-        'Fake Size 0': 10,
-        'Fake Size 1': 11,
-        'Fake Size 2': 12,
-      },
+      sizes: [],
+      quantities: {},
       cart: [],
     };
+
+    this.getSizesQtys = this.getSizesQtys.bind(this);
   }
 
-  // componentDidMount() {
-  //   $.ajax({
-  //     url: `product/${this.state.currentItem}`,
-  //     method: 'GET',
-  //     success: (data) => {
-  //       this.setState({
-  //         sizes: data.sizes,
-  //         quantities: data.quantities,
-  //       });
-  //     },
-  //     error: (err) => {
-  //       this.setState({
-  //         sizes: ['ERROR'],
-  //         quantities: {
-  //           ERROR: -1,
-  //         },
-  //       });
-  //       console.log('Error', err);
-  //     },
-  //   });
-  // }
+  componentDidMount() {
+    this.getSizesQtys(this.state.currentItem);
+  }
+
+  getSizesQtys(productId) {
+    $.ajax({
+      url: `product/${productId}`,
+      method: 'GET',
+      success: (data) => {
+        const newSizes = [];
+        const newQuantities = {};
+        for (let i = 0; i < data.length; i += 1) {
+          newSizes.push(data[i].name);
+          newQuantities[data[i].name] = data[i].quantity;
+        }
+        this.setState({
+          sizes: newSizes,
+          quantities: newQuantities,
+        });
+      },
+      error: (err) => {
+        this.setState({
+          sizes: ['ERROR'],
+          quantities: {
+            ERROR: -1,
+          },
+        });
+        console.log('Error', err);
+      },
+    });
+  }
 
   render() {
     return (
