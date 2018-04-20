@@ -3,7 +3,7 @@ body {
   font-size: 12px;
 }
 
-.minicart {
+.minicart-icon {
   box-sizing: border-box;
   background-color: red;
   height: 2.5em;
@@ -14,6 +14,26 @@ body {
   text-align: center;
   line-height: 2.5em;
   cursor: pointer;
+}
+
+.minicart-view {
+  display: flex;
+  width: 300px;
+  border: 2px solid #CECECE;
+  margin-top: 10px;
+}
+
+.minicart-view.empty {
+  width: 12em;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  line-height: 3.5em;
+}
+
+.minicart-view.hidden {
+  display: none;
 }
 
 .quickadd {
