@@ -1,10 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const MiniCart = (props) => (
-  <div className="minicart">
-    <span>0</span>
-  </div>
+class MiniCart extends React.Component (
+  constructor(props) {
+    super(props);
+    this.state = {
+      cart: [];
+    };
+
+    this.generateMiniCart = this.generateMiniCart.bind(this);
+  }
+
+  generateMiniCart() {
+    
+  }
+
+  render() {
+    return (
+      <div className="minicart-icon">
+        <span>0</span>
+      </div>
+      <div className="minicart-view">
+        {this.generateMiniCart(this.state.cart)}
+      </div>
+    );
+  }
 );
 
 export default MiniCart;
