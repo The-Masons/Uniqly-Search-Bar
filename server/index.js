@@ -13,13 +13,13 @@ app.get('/product/:productId', (req, res) => {
       (sizes INNER JOIN products_sizes ON sizes.size_id = products_sizes.size_id)
       WHERE products_sizes.product_id = $1 ORDER BY sizes.name;
     `, [req.params.productId], (err, data) => {
-      if (err) {
-        console.log(err);
-        res.send();
-      } else {
-        res.send(data);
-      }
-    });
+    if (err) {
+      console.log(err);
+      res.send();
+    } else {
+      res.send(data);
+    }
+  });
 });
 
 // app.get('/product/:productId/addtocart', (req, res) => {

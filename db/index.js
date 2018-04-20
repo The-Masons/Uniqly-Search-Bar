@@ -20,7 +20,6 @@ const query = (queryText, queryArgs, callback) =>
     })
     .catch((err) => {
       callback(err, null);
-    })
-  .catch(err => callback(err, null));
+    });
 
 module.exports.query = query;
