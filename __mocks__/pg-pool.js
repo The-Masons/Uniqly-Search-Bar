@@ -9,6 +9,9 @@ const connect = jest.fn().mockReturnValue(new Promise(resolve => resolve({
   release: mockRelease,
 })));
 
+const query = jest.fn().mockReturnValue(new Promise(resolve => resolve()));
+
+Pool.prototype.query = query;
 Pool.prototype.connect = connect;
 Pool.prototype.mockQuery = mockQuery;
 Pool.prototype.mockRelease = mockRelease;
