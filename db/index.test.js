@@ -5,19 +5,17 @@ jest.mock('pg-pool');
 
 beforeEach(() => {
   Pool.mockClear();
-  Pool.prototype.connect.mockClear();
-  Pool.prototype.mockQuery.mockClear();
-  Pool.prototype.mockRelease.mockClear();
+  Pool.prototype.query.mockClear();
 });
 
 describe('query', () => {
   test('should correctly query the db', () => {
     const pool = new Pool();
-    const clientQuery = Pool.prototype.mockQuery;
+    const poolQuery = Pool.prototype.query;
     const expectedQuery = 'SELECT foo FROM bar';
 
     return db.query(expectedQuery, [], () => {}).then(() =>
-      expect(clientQuery.mock.calls[0][0].split(' ').filter(word => word !== ''))
+      expect(poolQuery.mock.calls[0][0].split(' ').filter(word => word !== ''))
         .toEqual(expectedQuery.split(' ').filter(word => word !== ''), [0]));
   });
 
@@ -26,12 +24,5 @@ describe('query', () => {
     const mockCallback = jest.fn();
 
     return db.query('', [], mockCallback).then(() => expect(mockCallback).toHaveBeenCalledTimes(1));
-  });
-
-  test('should release clients back into the pool', () => {
-    const pool = new Pool();
-    const clientRelease = Pool.prototype.mockRelease;
-
-    return db.query('', [], () => {}).then(() => expect(clientRelease).toHaveBeenCalledTimes(1));
   });
 });

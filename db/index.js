@@ -13,16 +13,13 @@ pool.on('error', (err) => {
   process.exit(-1);
 });
 
-const query = (queryText, queryArgs, callback) => pool.connect()
-  .then(client => client.query(queryText, queryArgs)
+const query = (queryText, queryArgs, callback) =>
+  pool.query(queryText, queryArgs)
     .then((res) => {
-      client.release();
-      callback(null, res);
+      callback(null, res.rows);
     })
     .catch((err) => {
-      client.release();
       callback(err, null);
-    }))
-  .catch(err => callback(err, null));
+    });
 
 module.exports.query = query;
