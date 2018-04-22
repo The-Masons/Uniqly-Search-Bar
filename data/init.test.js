@@ -19,11 +19,11 @@ describe('createTables', () => {
       );`,
       `CREATE TABLE IF NOT EXISTS colors (
         color_id INT PRIMARY KEY,
-        name TEXT
+        color_name TEXT
       );`,
       `CREATE TABLE IF NOT EXISTS sizes (
         size_id INT PRIMARY KEY,
-        name TEXT
+        size_name TEXT
       );`,
       `CREATE TABLE IF NOT EXISTS products (
         product_id INT PRIMARY KEY,
