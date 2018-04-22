@@ -41,7 +41,6 @@ class QuickAdd extends React.Component {
       <div className="quickadd">
         <div className="quickadd-select">
           <select className="quickadd-dropdown quickadd-select-sizes" onChange={this.handleSelect}>
-            <option>Select Size</option>
             {this.generateSizes(this.props.sizes)}
           </select>
           <select className="quickadd-dropdown quickadd-select-quantity">
