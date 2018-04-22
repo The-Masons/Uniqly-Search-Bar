@@ -20,7 +20,7 @@ const ItemPicker = (props) => {
 
   return (
     <div className="itempicker">
-      <select className="itempicker-select">
+      <select className="itempicker-select" onChange={props.setCurrentItem}>
         {generateItems(props.items)}
       </select>
     </div>
