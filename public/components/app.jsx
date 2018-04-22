@@ -32,9 +32,9 @@ class App extends React.Component {
     });
   }
 
-  setItem(itemId) {
+  setItem(e) {
     this.setState({
-      currentItem: itemId,
+      currentItem: e.target.selectedOptions[0].dataset.id,
     });
   }
 
