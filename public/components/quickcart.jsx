@@ -9,7 +9,7 @@ class QuickCart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentItem: 0,
+      currentItem: this.props.item,
       sizes: [],
       quantities: {},
       cart: [],

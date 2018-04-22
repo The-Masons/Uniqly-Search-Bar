@@ -8,7 +8,7 @@ describe('QuickCart', () => {
   describe('getSizesQtys', () => {
     test('should load data from the db on page load', () => {
       const spy = jest.spyOn(QuickCart.prototype, 'getSizesQtys');
-      const quickCart = mount(<QuickCart />);
+      const quickCart = mount(<QuickCart item={0}/>);
 
       expect(spy).toHaveBeenCalledTimes(1);
 
@@ -17,7 +17,7 @@ describe('QuickCart', () => {
 
     test('should set state when a request succeeds', () => {
       const spy = jest.spyOn(QuickCart.prototype, 'getSizesQtys');
-      const quickCart = mount(<QuickCart />);
+      const quickCart = mount(<QuickCart item={0}/>);
 
       expect(quickCart.state('sizes')).toEqual(['Fake Size Foo', 'Fake Size Bar']);
       expect(quickCart.state('quantities')).toEqual({
@@ -30,7 +30,7 @@ describe('QuickCart', () => {
 
     test('should set state when a request fails', () => {
       const spy = jest.spyOn(QuickCart.prototype, 'getSizesQtys');
-      const quickCart = mount(<QuickCart />);
+      const quickCart = mount(<QuickCart item={0}/>);
 
       quickCart.instance().getSizesQtys(42);
 
