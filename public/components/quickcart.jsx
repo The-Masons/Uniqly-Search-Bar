@@ -9,7 +9,6 @@ class QuickCart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentItem: this.props.item,
       sizes: [],
       quantities: {},
       cart: [],
@@ -19,7 +18,13 @@ class QuickCart extends React.Component {
   }
 
   componentDidMount() {
-    this.getSizesQtys(this.state.currentItem);
+    this.getSizesQtys(this.props.item);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.item !== this.props.item) {
+      this.getSizesQtys(this.props.item);
+    }
   }
 
   getSizesQtys(productId) {
@@ -30,8 +35,8 @@ class QuickCart extends React.Component {
         const newSizes = [];
         const newQuantities = {};
         for (let i = 0; i < data.length; i += 1) {
-          newSizes.push(data[i].name);
-          newQuantities[data[i].name] = data[i].quantity;
+          newSizes.push(data[i].size_name);
+          newQuantities[data[i].size_name] = data[i].quantity;
         }
         this.setState({
           sizes: newSizes,

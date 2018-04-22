@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 import QuickCart from './quickcart.jsx';
 import ItemPicker from './item-picker.jsx';
 
@@ -6,40 +7,42 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: 0,
+      currentItem: -1,
+      items: [],
     };
 
     this.setItem = this.setItem.bind(this);
   }
 
-  setItem(itemId) {
-    this.setState({
-      item: itemId,
+  componentDidMount() {
+    $.ajax({
+      url: '/products',
+      method: 'GET',
+      success: (data) => {
+        this.setState({
+          currentItem: data[0].product_id,
+          items: data,
+        });
+      },
+      error: (err) => {
+        this.setState({
+          items: [{ name: 'ERROR', id: -1 }],
+        });
+      },
     });
   }
 
-  getItems() {
-    return [
-      {
-        name: 'Fake Item 0',
-        id: 0,
-      },
-      {
-        name: 'Fake Item 1',
-        id: 1,
-      },
-      {
-        name: 'Fake Item 2',
-        id: 2,
-      },
-    ];
+  setItem(itemId) {
+    this.setState({
+      currentItem: itemId,
+    });
   }
 
   render() {
     return (
       <div className="App">
-        <QuickCart item={this.state.item}/>
-        <ItemPicker items={this.getItems()} setCurrentItem={this.setItem}/>
+        <QuickCart item={this.state.currentItem}/>
+        <ItemPicker items={this.state.items} setCurrentItem={this.setItem}/>
       </div>
     );
   }
