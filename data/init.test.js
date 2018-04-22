@@ -15,7 +15,7 @@ describe('createTables', () => {
     const tableQueries = [
       `CREATE TABLE IF NOT EXISTS names (
         name_id INT PRIMARY KEY,
-        name TEXT
+        name_name TEXT
       );`,
       `CREATE TABLE IF NOT EXISTS colors (
         color_id INT PRIMARY KEY,
@@ -76,7 +76,7 @@ describe('populateTwoField', () => {
     const clientQuery = Pool.prototype.mockQuery;
 
     return initScripts.populateTwoField('foo', 'bar', 1).then(() => expect(clientQuery)
-      .toHaveBeenCalledWith('INSERT INTO foos(foo_id, name) VALUES($1, $2)', [0, 'bar 0']));
+      .toHaveBeenCalledWith('INSERT INTO foos(foo_id, foo_name) VALUES($1, $2)', [0, 'bar 0']));
   });
 
   test('should query the db the correct amount of times', () => {

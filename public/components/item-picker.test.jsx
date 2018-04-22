@@ -7,16 +7,19 @@ describe('ItemPicker', () => {
       <ItemPicker
         items={[
           {
-            name: 'Fake Item 0',
-            id: 0,
+            name_name: 'Fake Item 0',
+            product_id: 0,
+            color_name: 'Fake Color 0',
           },
           {
-            name: 'Fake Item 1',
-            id: 1,
+            name_name: 'Fake Item 1',
+            product_id: 1,
+            color_name: 'Fake Color 0',
           },
           {
-            name: 'Fake Item 2',
-            id: 2,
+            name_name: 'Fake Item 2',
+            product_id: 2,
+            color_name: 'Fake Color 0',
           },
         ]}/>
       );

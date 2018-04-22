@@ -5,16 +5,19 @@ exports[`ItemPicker should render with the correct items 1`] = `
   items={
     Array [
       Object {
-        "id": 0,
-        "name": "Fake Item 0",
+        "color_name": "Fake Color 0",
+        "name_name": "Fake Item 0",
+        "product_id": 0,
       },
       Object {
-        "id": 1,
-        "name": "Fake Item 1",
+        "color_name": "Fake Color 0",
+        "name_name": "Fake Item 1",
+        "product_id": 1,
       },
       Object {
-        "id": 2,
-        "name": "Fake Item 2",
+        "color_name": "Fake Color 0",
+        "name_name": "Fake Item 2",
+        "product_id": 2,
       },
     ]
   }
@@ -31,6 +34,8 @@ exports[`ItemPicker should render with the correct items 1`] = `
         key="itemPicker0"
       >
         Fake Item 0
+        , 
+        Fake Color 0
       </option>
       <option
         className="itempicker-option"
@@ -38,6 +43,8 @@ exports[`ItemPicker should render with the correct items 1`] = `
         key="itemPicker1"
       >
         Fake Item 1
+        , 
+        Fake Color 0
       </option>
       <option
         className="itempicker-option"
@@ -45,6 +52,8 @@ exports[`ItemPicker should render with the correct items 1`] = `
         key="itemPicker2"
       >
         Fake Item 2
+        , 
+        Fake Color 0
       </option>
     </select>
   </div>
