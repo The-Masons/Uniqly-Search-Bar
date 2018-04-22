@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItemPicker should render with the correct items 1`] = `
+<ItemPicker
+  items={
+    Array [
+      Object {
+        "id": 0,
+        "name": "Fake Item 0",
+      },
+      Object {
+        "id": 1,
+        "name": "Fake Item 1",
+      },
+      Object {
+        "id": 2,
+        "name": "Fake Item 2",
+      },
+    ]
+  }
+>
+  <div
+    className="itempicker"
+  >
+    <select
+      className="itempicker-select"
+    >
+      <option
+        className="itempicker-option"
+        data-id={0}
+        key="itemPicker0"
+      >
+        Fake Item 0
+      </option>
+      <option
+        className="itempicker-option"
+        data-id={1}
+        key="itemPicker1"
+      >
+        Fake Item 1
+      </option>
+      <option
+        className="itempicker-option"
+        data-id={2}
+        key="itemPicker2"
+      >
+        Fake Item 2
+      </option>
+    </select>
+  </div>
+</ItemPicker>
+`;
