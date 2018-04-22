@@ -6,7 +6,12 @@ const ItemPicker = (props) => {
 
     for (let i = 0; i < items.length; i += 1) {
       itemList.push(
-        <option className="itempicker-option" key={'itemPicker' + i} data-id={items[i].id}>{items[i].name}</option>
+        <option
+          className="itempicker-option"
+          key={'itemPicker' + i}
+          data-id={items[i].product_id}>
+          {items[i].name_name}, {items[i].color_name}
+        </option>
       );
     }
 

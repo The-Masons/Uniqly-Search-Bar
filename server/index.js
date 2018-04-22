@@ -27,7 +27,7 @@ app.get('/product/:productId', (req, res) => {
   db.query(`
     SELECT sizes.size_name, products_sizes.quantity FROM
       (sizes INNER JOIN products_sizes ON sizes.size_id = products_sizes.size_id)
-      WHERE products_sizes.product_id = $1 ORDER BY sizes.name;
+      WHERE products_sizes.product_id = $1 ORDER BY sizes.size_name;
     `, [req.params.productId], (err, data) => {
     if (err) {
       console.log(err);
