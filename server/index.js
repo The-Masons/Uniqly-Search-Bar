@@ -9,7 +9,7 @@ app.use(express.static(path.join(__dirname, '/../client')));
 
 app.get('/products', (req, res) => {
   db.query(`
-    SELECT names.name, colors.color_name, products.product_id FROM
+    SELECT names.name_name, colors.color_name, products.product_id FROM
       (products INNER JOIN names ON products.name_id = names.name_id)
       INNER JOIN colors ON products.color_id = colors.color_id
       ORDER BY products.product_id;
