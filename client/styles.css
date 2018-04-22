@@ -3,7 +3,7 @@ body {
   font-size: 12px;
 }
 
-.minicart {
+.minicart-icon {
   box-sizing: border-box;
   background-color: red;
   height: 2.5em;
@@ -13,6 +13,102 @@ body {
   font-size: 18px;
   text-align: center;
   line-height: 2.5em;
+  cursor: pointer;
+}
+
+.minicart-view {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  position: absolute;
+  background-color: white;
+  width: 300px;
+  border: 3px solid #CECECE;
+  margin-top: 10px;
+}
+
+.minicart-view.empty {
+  justify-content: center;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  line-height: 3.5em;
+  width: 12em;
+}
+
+.minicart-view.hidden {
+  display: none;
+}
+
+.minicart-user-cart {
+  width: 90%;
+}
+
+.cart-item {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding-top: 15px;
+}
+
+.cart-item:last-child {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #CECECE;
+}
+
+.cart-item-img {
+  width: 85px;
+  height: 85px;
+}
+
+.cart-item-info {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  width: 100px
+}
+
+.cart-item-info.name {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cart-item-info.qty,
+.cart-item-info.color,
+.cart-item-info.size {
+  color: gray;
+}
+
+.cart-item-price {
+  font-size: 16px;
+  text-align: right;
+  width: 50px;
+}
+
+.minicart-total {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  width: 90%;
+  margin-top: 15px;
+}
+
+.minicart-cart-controls {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  width: 90%;
+  padding: 15px 0 15px 0;
+  border-bottom: 1px solid #CECECE;
+}
+
+.minicart-close-btn {
+  font-size: 10px;
+  text-align: center;
+  border-bottom: 1px solid black;
+  width: 5em;
+  margin: 15px 0 15px 0;
   cursor: pointer;
 }
 
@@ -41,7 +137,9 @@ body {
   cursor: pointer;
 }
 
-.quickadd-button-add {
+.quickadd-button-add,
+.minicart-view-cart-btn,
+.minicart-checkout-btn {
   height: 2.5em;
   width: 100%;
   font-weight: bold;
@@ -50,4 +148,16 @@ body {
   border: 0px none white;
   background-color: red;
   cursor: pointer;
+}
+
+.minicart-view-cart-btn,
+.minicart-checkout-btn {
+  font-size: 14px;
+  width: 45%;
+}
+
+.minicart-view-cart-btn {
+  color: black;
+  background-color: white;
+  border: 3px solid black;
 }
