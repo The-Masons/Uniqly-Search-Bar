@@ -15,6 +15,7 @@ describe('MiniCart', () => {
     const miniCart = mount(<MiniCart
       cart={{
         'Fake 1': {
+          id: 0,
           name: 'Dog Shirt',
           color: 'Dog Color',
           quantity: 2,
@@ -23,6 +24,7 @@ describe('MiniCart', () => {
           imgUrl: 'http://placecorgi.com/250'
         },
         'Fake 2': {
+          id: 1,
           name: 'Cat Shirt',
           color: 'Cat Color',
           quantity: 1,
@@ -31,6 +33,7 @@ describe('MiniCart', () => {
           imgUrl: 'http://placecorgi.com/250'
         },
         'Fake 3': {
+          id: 2,
           name: 'Some Pants',
           color: 'Pants Color',
           quantity: 1,
@@ -41,6 +44,7 @@ describe('MiniCart', () => {
       }}
       cartSize={4}
       cartOrder={['Fake 1', 'Fake 3', 'Fake 2']}
+      getNewPage={jest.fn()}
       />);
 
     expect(miniCart).toMatchSnapshot();

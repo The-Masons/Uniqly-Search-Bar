@@ -34,6 +34,7 @@ class QuickCart extends React.Component {
           newQuantities[data[i].name] = data[i].quantity;
         }
         this.setState({
+          currentItem: productId,
           sizes: newSizes,
           quantities: newQuantities,
         });
@@ -56,6 +57,7 @@ class QuickCart extends React.Component {
         <MiniCart
           cart={{
             'Fake 1': {
+              id: 0,
               name: 'Dog Shirt',
               color: 'Dog Color',
               quantity: 2,
@@ -64,6 +66,7 @@ class QuickCart extends React.Component {
               imgUrl: 'http://placecorgi.com/250'
             },
             'Fake 2': {
+              id: 1,
               name: 'Cat Shirt',
               color: 'Cat Color',
               quantity: 1,
@@ -72,6 +75,7 @@ class QuickCart extends React.Component {
               imgUrl: 'http://placecorgi.com/250'
             },
             'Fake 3': {
+              id: 2,
               name: 'Some Pants',
               color: 'Pants Color',
               quantity: 1,
@@ -82,6 +86,7 @@ class QuickCart extends React.Component {
           }}
           cartSize={4}
           cartOrder={['Fake 1', 'Fake 3', 'Fake 2']}
+          getNewPage={this.getSizesQtys}
           />
         <QuickAdd sizes={this.state.sizes} quantities={this.state.quantities}/>
       </div>

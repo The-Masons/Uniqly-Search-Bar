@@ -6,6 +6,7 @@ exports[`MiniCart should correctly render a cart with items 1`] = `
     Object {
       "Fake 1": Object {
         "color": "Dog Color",
+        "id": 0,
         "imgUrl": "http://placecorgi.com/250",
         "name": "Dog Shirt",
         "price": 9999,
@@ -14,6 +15,7 @@ exports[`MiniCart should correctly render a cart with items 1`] = `
       },
       "Fake 2": Object {
         "color": "Cat Color",
+        "id": 1,
         "imgUrl": "http://placecorgi.com/250",
         "name": "Cat Shirt",
         "price": 5099,
@@ -22,6 +24,7 @@ exports[`MiniCart should correctly render a cart with items 1`] = `
       },
       "Fake 3": Object {
         "color": "Pants Color",
+        "id": 2,
         "imgUrl": "http://placecorgi.com/250",
         "name": "Some Pants",
         "price": 1599,
@@ -38,6 +41,7 @@ exports[`MiniCart should correctly render a cart with items 1`] = `
     ]
   }
   cartSize={4}
+  getNewPage={[MockFunction]}
 >
   <div
     className="minicart"
@@ -73,22 +77,26 @@ exports[`MiniCart should correctly render a cart with items 1`] = `
           >
             <span
               className="cart-item-info name"
+              onClick={[Function]}
             >
               Dog Shirt
             </span>
             <span
               className="cart-item-info qty"
             >
+              Quantity: 
               2
             </span>
             <span
               className="cart-item-info color"
             >
+              Color: 
               Dog Color
             </span>
             <span
               className="cart-item-info size"
             >
+              Size: 
               Small Dog Size
             </span>
           </div>
@@ -112,22 +120,26 @@ exports[`MiniCart should correctly render a cart with items 1`] = `
           >
             <span
               className="cart-item-info name"
+              onClick={[Function]}
             >
               Some Pants
             </span>
             <span
               className="cart-item-info qty"
             >
+              Quantity: 
               1
             </span>
             <span
               className="cart-item-info color"
             >
+              Color: 
               Pants Color
             </span>
             <span
               className="cart-item-info size"
             >
+              Size: 
               Human Size
             </span>
           </div>
@@ -151,22 +163,26 @@ exports[`MiniCart should correctly render a cart with items 1`] = `
           >
             <span
               className="cart-item-info name"
+              onClick={[Function]}
             >
               Cat Shirt
             </span>
             <span
               className="cart-item-info qty"
             >
+              Quantity: 
               1
             </span>
             <span
               className="cart-item-info color"
             >
+              Color: 
               Cat Color
             </span>
             <span
               className="cart-item-info size"
             >
+              Size: 
               Cat Size
             </span>
           </div>
@@ -214,6 +230,7 @@ exports[`MiniCart should correctly render a cart with items 1`] = `
       <span
         className="minicart-close-btn"
         key="closeBag"
+        onClick={[Function]}
       >
         CLOSE BAG
       </span>

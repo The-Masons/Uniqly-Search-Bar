@@ -27,18 +27,25 @@ class MiniCart extends React.Component {
     });
   }
 
-  hideCart() {
+  hideCart(isImmediate) {
     if (this.state.timeoutID) {
       clearTimeout(this.state.timeoutID);
     }
 
-    const newTimeoutID = setTimeout(() => this.setState({
-      viewClass: this.state.viewClass + ' hidden',
-    }), 5000);
+    if (isImmediate) {
+      this.setState({
+        viewClass: this.state.viewClass + ' hidden',
+        timeoutID: '',
+      });
+    } else {
+      const newTimeoutID = setTimeout(() => this.setState({
+        viewClass: this.state.viewClass + ' hidden',
+      }), 5000);
 
-    this.setState({
-      timeoutID: newTimeoutID,
-    });
+      this.setState({
+        timeoutID: newTimeoutID,
+      });
+    }
   }
 
   calculateTotal() {
@@ -59,10 +66,14 @@ class MiniCart extends React.Component {
           <div className="cart-item" key={'cartItem' + i}>
             <img className="cart-item-img" src={this.state.cart[currItem].imgUrl}/>
             <div className="cart-item-info">
-              <span className="cart-item-info name">{this.state.cart[currItem].name}</span>
-              <span className="cart-item-info qty">{this.state.cart[currItem].quantity}</span>
-              <span className="cart-item-info color">{this.state.cart[currItem].color}</span>
-              <span className="cart-item-info size">{this.state.cart[currItem].size}</span>
+              <span
+                className="cart-item-info name"
+                onClick={this.props.getNewPage.bind(null, this.state.cart[currItem].id)}>
+                {this.state.cart[currItem].name}
+              </span>
+              <span className="cart-item-info qty">Quantity: {this.state.cart[currItem].quantity}</span>
+              <span className="cart-item-info color">Color: {this.state.cart[currItem].color}</span>
+              <span className="cart-item-info size">Size: {this.state.cart[currItem].size}</span>
             </div>
             <span className="cart-item-price">${this.state.cart[currItem].price / 100}</span>
           </div>
@@ -81,7 +92,7 @@ class MiniCart extends React.Component {
           <button className="minicart-view-cart-btn">VIEW BAG</button>
           <button className="minicart-checkout-btn">CHECKOUT</button>
         </div>,
-        <span className="minicart-close-btn" key="closeBag">CLOSE BAG</span>,
+        <span className="minicart-close-btn" key="closeBag" onClick={this.hideCart.bind(null, true)}>CLOSE BAG</span>,
       ];
     } else {
       return 'YOUR BAG IS EMPTY';
@@ -93,12 +104,12 @@ class MiniCart extends React.Component {
       <div className="minicart">
         <div className="minicart-icon"
             onMouseEnter={this.showCart}
-            onMouseLeave={this.hideCart}>
+            onMouseLeave={this.hideCart.bind(null, false)}>
           <span>{this.state.cartSize}</span>
         </div>
         <div className={this.state.viewClass}
           onMouseEnter={this.showCart}
-          onMouseLeave={this.hideCart}>
+          onMouseLeave={this.hideCart.bind(null, false)}>
           {this.generateMiniCart(this.state.cartSize)}
         </div>
       </div>
