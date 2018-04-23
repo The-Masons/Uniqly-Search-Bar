@@ -1,6 +1,6 @@
 # Project Name
 
-The quick-add feature from a Uniqlo product page.
+The quick-add and mini-cart features from a Uniqlo product page.
 
 ## Related Projects
 
@@ -17,13 +17,28 @@ The quick-add feature from a Uniqlo product page.
 
 ## Usage
 
-> Some usage instructions
+To start the development server:
+
+```sh
+PGPASSWORD=YOUR_DB_PASSWORD PGPORT=YOUR_POSTGRES_PORT npm run server-dev
+```
+
+To run webpack:
+
+```sh
+npm run react-dev
+```
+
+The default port is set to 3001.
 
 ## Requirements
 
 - Node 6.13.0
 - React
 - React-DOM
+- ExpressJS
+- jQuery
+- Node-Postgres
 
 ## Development
 
