@@ -14,13 +14,13 @@ app.get('/products', (req, res) => {
       INNER JOIN colors ON products.color_id = colors.color_id
       ORDER BY products.product_id;
     `, [], (err, data) => {
-      if (err) {
-        console.log(err);
-        res.send();
-      } else {
-        res.send(data);
-      }
-    })
+    if (err) {
+      console.log(err);
+      res.send();
+    } else {
+      res.send(data);
+    }
+  });
 });
 
 app.get('/product/:productId', (req, res) => {
@@ -38,9 +38,22 @@ app.get('/product/:productId', (req, res) => {
   });
 });
 
-// app.get('/product/:productId/addtocart', (req, res) => {
-//
-// });
+app.get('/product/:productId/addtocart', (req, res) => {
+  db.query(`
+    SELECT images.img_url, names.name_name, colors.color_name, products.price FROM
+      (((products INNER JOIN colors ON products.color_id = colors.color_id)
+      INNER JOIN names ON products.name_id = names.name_id)
+      INNER JOIN images ON products.product_id = images.product_id)
+      WHERE products.product_id = $1 AND images.isPrimary = true;
+    `, [req.params.productId], (err, data) => {
+    if (err) {
+      console.log(err);
+      res.send();
+    } else {
+      res.send(data);
+    }
+  });
+});
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
