@@ -1,5 +1,5 @@
 import React from 'react';
-import QuickAdd from './quickadd.jsx';
+import QuickAdd from './quick-add.jsx';
 
 describe('QuickAdd', () => {
   test('should populate dropdowns with given data', () => {

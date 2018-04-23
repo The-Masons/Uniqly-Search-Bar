@@ -1,5 +1,5 @@
 import React from 'react';
-import MiniCart from './minicart.jsx';
+import MiniCart from './mini-cart.jsx';
 
 describe('MiniCart', () => {
   test('should correctly render an empty cart', () => {

@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
-import MiniCart from './minicart.jsx';
-import QuickAdd from './quickadd.jsx';
+import MiniCart from './mini-cart.jsx';
+import QuickAdd from './quick-add.jsx';
 
 class QuickCart extends React.Component {
   constructor(props) {
