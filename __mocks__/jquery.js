@@ -16,7 +16,7 @@ const ajax = jest.fn((options) => {
       },
     ]);
   } else {
-    options.error.call(null, 'This is a fake error ' + options.url);
+    options.error.call(null, `This is a fake error ${options.url}`);
   }
 });
 
