@@ -6,13 +6,20 @@ class QuickAdd extends React.Component {
     this.state = {
       currentSize: '',
     };
+
     this.handleSelect = this.handleSelect.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
   }
 
   handleSelect(e) {
     this.setState({
       currentSize: e.target.value,
     });
+  }
+
+  handleAdd(e) {
+    e.preventDefault();
+    this.props.addToCart(e.target.form[0].value, e.target.form[1].value);
   }
 
   generateSizes(sizes) {
@@ -39,17 +46,15 @@ class QuickAdd extends React.Component {
   render() {
     return (
       <div className="quickadd">
-        <div className="quickadd-select">
+        <form className="quickadd-form">
           <select className="quickadd-dropdown quickadd-select-sizes" onChange={this.handleSelect}>
             {this.generateSizes(this.props.sizes)}
           </select>
           <select className="quickadd-dropdown quickadd-select-quantity">
             {this.generateQtys(this.state.currentSize)}
           </select>
-        </div>
-        <div className="quickadd-button">
-          <button className="quickadd-button-add">ADD TO BAG</button>
-        </div>
+          <button className="quickadd-button-add" onClick={this.handleAdd}>ADD TO BAG</button>
+        </form>
       </div>
     );
   }

@@ -16,6 +16,7 @@ class QuickCart extends React.Component {
     };
 
     this.getSizesQtys = this.getSizesQtys.bind(this);
+    this.addToCart= this.addToCart.bind(this);
   }
 
   componentDidMount() {
@@ -59,15 +60,40 @@ class QuickCart extends React.Component {
 
   addToCart(size, quantity) {
     $.ajax({
-      url: `/product/${this.props.item}/addtocart`,
+      url: `product/${this.props.item}/addtocart`,
       method: 'GET',
       success: (data) => {
-        const newItem = {
-
+        const newCart = Object.assign({}, this.state.cart);
+        const cartKey = this.props.item + ' ' + size;
+        if (this.state.cart.hasOwnProperty(cartKey)) {
+          newCart[cartKey].quantity += parseInt(quantity);
+          const newCartSize = this.state.cartSize + parseInt(quantity);
+          this.setState({
+            cart: newCart,
+            cartSize: newCartSize,
+          });
+        } else {
+          newCart[cartKey] = {
+            id: this.props.item,
+            name: data[0].name_name,
+            color: data[0].color_name,
+            quantity: parseInt(quantity),
+            size: size,
+            price: data[0].price,
+            imgUrl: data[0].img_url,
+          };
+          const newCartSize = this.state.cartSize + parseInt(quantity);
+          const newOrder = this.state.cartOrder.slice();
+          newOrder.unshift(cartKey);
+          this.setState({
+            cart: newCart,
+            cartSize: newCartSize,
+            cartOrder: newOrder,
+          });
         }
       },
       error: (err) => {
-        throw err;
+        console.log('Error', err);
       },
     });
   }
@@ -76,40 +102,15 @@ class QuickCart extends React.Component {
     return (
       <div className="quickCart">
         <MiniCart
-          cart={{
-            'Fake 1': {
-              id: 0,
-              name: 'Dog Shirt',
-              color: 'Dog Color',
-              quantity: 2,
-              size: 'Small Dog Size',
-              price: 9999,
-              imgUrl: 'http://placecorgi.com/250'
-            },
-            'Fake 2': {
-              id: 1,
-              name: 'Cat Shirt',
-              color: 'Cat Color',
-              quantity: 1,
-              size: 'Cat Size',
-              price: 5099,
-              imgUrl: 'http://placecorgi.com/250'
-            },
-            'Fake 3': {
-              id: 2,
-              name: 'Some Pants',
-              color: 'Pants Color',
-              quantity: 1,
-              size: 'Human Size',
-              price: 1599,
-              imgUrl: 'http://placecorgi.com/250'
-            },
-          }}
-          cartSize={4}
-          cartOrder={['Fake 1', 'Fake 3', 'Fake 2']}
+          cart={this.state.cart}
+          cartSize={this.state.cartSize}
+          cartOrder={this.state.cartOrder}
           getNewPage={this.getSizesQtys}
           />
-        <QuickAdd sizes={this.state.sizes} quantities={this.state.quantities}/>
+        <QuickAdd
+          sizes={this.state.sizes}
+          quantities={this.state.quantities}
+          addToCart={this.addToCart}/>
       </div>
     );
   }
