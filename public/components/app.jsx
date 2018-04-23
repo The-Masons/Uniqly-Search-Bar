@@ -1,6 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
-import QuickCart from './quickcart.jsx';
+import QuickCart from './quick-cart.jsx';
 import ItemPicker from './item-picker.jsx';
 
 class App extends React.Component {
