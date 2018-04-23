@@ -161,3 +161,7 @@ body {
   background-color: white;
   border: 3px solid black;
 }
+
+.itempicker {
+  margin-top: 20px;
+}

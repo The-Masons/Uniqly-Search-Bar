@@ -17,15 +17,15 @@ const createTables = () => {
   const tableQueries = [
     `CREATE TABLE IF NOT EXISTS names (
       name_id INT PRIMARY KEY,
-      name TEXT
+      name_name TEXT
     );`,
     `CREATE TABLE IF NOT EXISTS colors (
       color_id INT PRIMARY KEY,
-      name TEXT
+      color_name TEXT
     );`,
     `CREATE TABLE IF NOT EXISTS sizes (
       size_id INT PRIMARY KEY,
-      name TEXT
+      size_name TEXT
     );`,
     `CREATE TABLE IF NOT EXISTS products (
       product_id INT PRIMARY KEY,
@@ -96,7 +96,7 @@ const createTables = () => {
 };
 
 const populateTwoField = (table, name, numRows) => {
-  const queryText = `INSERT INTO ${table}s(${table}_id, name) VALUES($1, $2)`;
+  const queryText = `INSERT INTO ${table}s(${table}_id, ${table}_name) VALUES($1, $2)`;
   return Promise.all((() => {
     const promises = [];
     for (let i = 0; i < numRows; i += 1) {
