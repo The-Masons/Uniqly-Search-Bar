@@ -4,7 +4,6 @@ class MiniCart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cartSize: this.props.cartSize || 0,
       viewClass: this.props.cartSize > 0 ? 'minicart-view hidden' : 'minicart-view empty hidden',
       timeoutID: '',
     };
@@ -82,7 +81,7 @@ class MiniCart extends React.Component {
           {newCart}
         </div>,
         <div className="minicart-total" key="cartTotal">
-          <span className="total-item-count">TOTAL ({this.state.cartSize} ITEMS)</span>
+          <span className="total-item-count">TOTAL ({this.props.cartSize} ITEMS)</span>
           <span className="total-subtotal">${this.calculateTotal() / 100}</span>
         </div>,
         <div className="minicart-cart-controls" key="cartControls">
@@ -102,12 +101,12 @@ class MiniCart extends React.Component {
         <div className="minicart-icon"
             onMouseEnter={this.showCart}
             onMouseLeave={this.hideCart.bind(null, false)}>
-          <span>{this.state.cartSize}</span>
+          <span>{this.props.cartSize}</span>
         </div>
         <div className={this.state.viewClass}
           onMouseEnter={this.showCart}
           onMouseLeave={this.hideCart.bind(null, false)}>
-          {this.generateMiniCart(this.state.cartSize)}
+          {this.generateMiniCart(this.props.cartSize)}
         </div>
       </div>
     );
