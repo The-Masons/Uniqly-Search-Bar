@@ -13,6 +13,14 @@ class MiniCart extends React.Component {
     this.hideCart = this.hideCart.bind(this);
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.cartSize < this.props.cartSize) {
+      this.setState({
+        viewClass: 'minicart-view',
+      }, this.hideCart.bind(null, false));
+    }
+  }
+
   showCart() {
     if (this.state.timeoutID) {
       clearTimeout(this.state.timeoutID);
