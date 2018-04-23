@@ -4,9 +4,6 @@ class MiniCart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cart: this.props.cart || {},
-      cartSize: this.props.cartSize || 0,
-      cartOrder: this.props.cartOrder || [],
       viewClass: this.props.cartSize > 0 ? 'minicart-view hidden' : 'minicart-view empty hidden',
       timeoutID: '',
     };
@@ -14,6 +11,14 @@ class MiniCart extends React.Component {
     this.generateMiniCart = this.generateMiniCart.bind(this);
     this.showCart = this.showCart.bind(this);
     this.hideCart = this.hideCart.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.cartSize < this.props.cartSize) {
+      this.setState({
+        viewClass: 'minicart-view',
+      }, this.hideCart.bind(null, false));
+    }
   }
 
   showCart() {
@@ -49,8 +54,8 @@ class MiniCart extends React.Component {
 
   calculateTotal() {
     let sum = 0;
-    for (let key in this.state.cart) {
-      sum += this.state.cart[key].price * this.state.cart[key].quantity;
+    for (let key in this.props.cart) {
+      sum += this.props.cart[key].price * this.props.cart[key].quantity;
     }
     return sum;
   }
@@ -59,22 +64,22 @@ class MiniCart extends React.Component {
     if (cartSize > 0) {
       const newCart = [];
 
-      for (let i = 0; i < this.state.cartOrder.length; i += 1) {
-        const currItem = this.state.cartOrder[i];
+      for (let i = 0; i < this.props.cartOrder.length; i += 1) {
+        const currItem = this.props.cartOrder[i];
         newCart.push(
           <div className="cart-item" key={'cartItem' + i}>
-            <img className="cart-item-img" src={this.state.cart[currItem].imgUrl}/>
+            <img className="cart-item-img" src={this.props.cart[currItem].imgUrl}/>
             <div className="cart-item-info">
               <span
                 className="cart-item-info name"
-                onClick={this.props.getNewPage.bind(null, this.state.cart[currItem].id)}>
-                {this.state.cart[currItem].name}
+                onClick={this.props.getNewPage.bind(null, this.props.cart[currItem].id)}>
+                {this.props.cart[currItem].name}
               </span>
-              <span className="cart-item-info qty">Quantity: {this.state.cart[currItem].quantity}</span>
-              <span className="cart-item-info color">Color: {this.state.cart[currItem].color}</span>
-              <span className="cart-item-info size">Size: {this.state.cart[currItem].size}</span>
+              <span className="cart-item-info qty">Quantity: {this.props.cart[currItem].quantity}</span>
+              <span className="cart-item-info color">Color: {this.props.cart[currItem].color}</span>
+              <span className="cart-item-info size">Size: {this.props.cart[currItem].size}</span>
             </div>
-            <span className="cart-item-price">${this.state.cart[currItem].price / 100}</span>
+            <span className="cart-item-price">${this.props.cart[currItem].price / 100}</span>
           </div>
         );
       }
@@ -84,7 +89,7 @@ class MiniCart extends React.Component {
           {newCart}
         </div>,
         <div className="minicart-total" key="cartTotal">
-          <span className="total-item-count">TOTAL ({this.state.cartSize} ITEMS)</span>
+          <span className="total-item-count">TOTAL ({this.props.cartSize} ITEMS)</span>
           <span className="total-subtotal">${this.calculateTotal() / 100}</span>
         </div>,
         <div className="minicart-cart-controls" key="cartControls">
@@ -104,12 +109,12 @@ class MiniCart extends React.Component {
         <div className="minicart-icon"
             onMouseEnter={this.showCart}
             onMouseLeave={this.hideCart.bind(null, false)}>
-          <span>{this.state.cartSize}</span>
+          <span>{this.props.cartSize}</span>
         </div>
         <div className={this.state.viewClass}
           onMouseEnter={this.showCart}
           onMouseLeave={this.hideCart.bind(null, false)}>
-          {this.generateMiniCart(this.state.cartSize)}
+          {this.generateMiniCart(this.props.cartSize)}
         </div>
       </div>
     );
