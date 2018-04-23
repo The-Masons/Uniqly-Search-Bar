@@ -5,6 +5,8 @@ class QuickAdd extends React.Component {
     super(props);
     this.state = {
       currentSize: '',
+      currentQty: '',
+      buttonClass: 'quickadd-btn',
     };
 
     this.handleSelect = this.handleSelect.bind(this);
@@ -12,14 +14,31 @@ class QuickAdd extends React.Component {
   }
 
   handleSelect(e) {
+    let newBtnClass = '';
+    let newQty = '';
+
+    if (this.props.quantities[e.target.form[0].value] < 1) {
+      newBtnClass = 'quickadd-btn disabled';
+      newQty = 'Out of Stock';
+    } else {
+      newBtnClass = 'quickadd-btn';
+      newQty = 1;
+    }
+
     this.setState({
-      currentSize: e.target.value,
+      currentSize: e.target.form[0].value,
+      currentQty: newQty,
+      buttonClass: newBtnClass,
     });
   }
 
   handleAdd(e) {
     e.preventDefault();
-    this.props.addToCart(e.target.form[0].value, e.target.form[1].value);
+    const size = e.target.form[0].value;
+    const qty = e.target.form[1].value;
+    if (qty !== 'Out of Stock') {
+      this.props.addToCart(size, qty);
+    }
   }
 
   generateSizes(sizes) {
@@ -40,7 +59,7 @@ class QuickAdd extends React.Component {
         <option key={'qtyOpt' + i}>{i + 1}</option>
       );
     }
-    return results;
+    return results.length > 0 ? results : <option>Out of Stock</option>;
   }
 
   render() {
@@ -48,14 +67,16 @@ class QuickAdd extends React.Component {
       <div className="quickadd">
         <form className="quickadd-form">
           <div className="quickadd-select">
-            <select className="quickadd-dropdown quickadd-select-sizes" onChange={this.handleSelect}>
+            <select
+              className="quickadd-dropdown quickadd-select-sizes"
+              onChange={this.handleSelect}>
               {this.generateSizes(this.props.sizes)}
             </select>
             <select className="quickadd-dropdown quickadd-select-quantity">
               {this.generateQtys(this.state.currentSize)}
             </select>
           </div>
-          <button className="quickadd-btn" onClick={this.handleAdd}>ADD TO BAG</button>
+          <button className={this.state.buttonClass} onClick={this.handleAdd}>ADD TO BAG</button>
         </form>
       </div>
     );

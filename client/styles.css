@@ -150,6 +150,11 @@ body {
   cursor: pointer;
 }
 
+.quickadd-btn.disabled {
+  background-color: grey;
+  cursor: default;
+}
+
 .minicart-view-cart-btn,
 .minicart-checkout-btn {
   font-size: 14px;
