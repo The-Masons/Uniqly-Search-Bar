@@ -10,7 +10,9 @@ class QuickCart extends React.Component {
     this.state = {
       sizes: [],
       quantities: {},
-      cart: [],
+      cart: {},
+      cartOrder: [],
+      cartSize: 0,
     };
 
     this.getSizesQtys = this.getSizesQtys.bind(this);
@@ -51,6 +53,21 @@ class QuickCart extends React.Component {
           },
         });
         console.log('Error', err);
+      },
+    });
+  }
+
+  addToCart(size, quantity) {
+    $.ajax({
+      url: `/product/${this.props.item}/addtocart`,
+      method: 'GET',
+      success: (data) => {
+        const newItem = {
+
+        }
+      },
+      error: (err) => {
+        throw err;
       },
     });
   }
