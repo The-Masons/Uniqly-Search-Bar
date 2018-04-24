@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
 import MiniCart from './mini-cart.jsx';
@@ -99,19 +100,39 @@ class QuickCart extends React.Component {
   }
 
   render() {
-    return (
-      <div className="quickCart">
-        <MiniCart
-          cart={this.state.cart}
-          cartSize={this.state.cartSize}
-          cartOrder={this.state.cartOrder}
-          getNewPage={this.getSizesQtys}
-          />
-        <QuickAdd
-          sizes={this.state.sizes}
-          quantities={this.state.quantities}
-          addToCart={this.addToCart}/>
-      </div>
+    // I know this isn't best practice but it's a weird workaround for the proxy server
+    // Normally, this function would look like this:
+    // return(
+    //   <div className="quickCart">
+    //     <MiniCart
+    //       cart={this.state.cart}
+    //       cartSize={this.state.cartSize}
+    //       cartOrder={this.state.cartOrder}
+    //       getNewPage={this.getSizesQtys}/>
+    //     <QuickAdd
+    //       sizes={this.state.sizes}
+    //       quantities={this.state.quantities}
+    //       addToCart={this.addToCart}/>
+    //   </div>
+    // );
+    //
+    ReactDOM.render(
+      <MiniCart
+        cart={this.state.cart}
+        cartSize={this.state.cartSize}
+        cartOrder={this.state.cartOrder}
+        getNewPage={this.getSizesQtys}
+        />, document.getElementById('mini-cart-app'));
+
+    ReactDOM.render(
+      <QuickAdd
+        sizes={this.state.sizes}
+        quantities={this.state.quantities}
+        addToCart={this.addToCart}
+        />, document.getElementById('quick-add-app'));
+
+    return(
+      <div className="quickCart"></div>
     );
   }
 }
