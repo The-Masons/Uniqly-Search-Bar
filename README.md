@@ -1,4 +1,4 @@
-# Project Name
+# Uniqly-Quick-Cart
 
 The quick-add and mini-cart features from a Uniqlo product page.
 
