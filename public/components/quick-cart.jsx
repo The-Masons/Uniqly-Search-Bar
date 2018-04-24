@@ -100,8 +100,23 @@ class QuickCart extends React.Component {
   }
 
   render() {
+    // I know this isn't best practice but it's a weird workaround for the proxy server
+    // Normally, this function would look like this:
+    // return(
+    //   <div className="quickCart">
+    //     <MiniCart
+    //       cart={this.state.cart}
+    //       cartSize={this.state.cartSize}
+    //       cartOrder={this.state.cartOrder}
+    //       getNewPage={this.getSizesQtys}/>
+    //     <QuickAdd
+    //       sizes={this.state.sizes}
+    //       quantities={this.state.quantities}
+    //       addToCart={this.addToCart}/>
+    //   </div>
+    // );
+    //
     ReactDOM.render(
-      // I know this isn't best practice but it's a weird workaround for the proxy server
       <MiniCart
         cart={this.state.cart}
         cartSize={this.state.cartSize}
