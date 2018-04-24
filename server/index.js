@@ -16,8 +16,10 @@ app.get('/products', (req, res) => {
     `, [], (err, data) => {
     if (err) {
       console.log(err);
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
       res.send();
     } else {
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
       res.send(data);
     }
   });
@@ -31,8 +33,10 @@ app.get('/product/:productId', (req, res) => {
     `, [req.params.productId], (err, data) => {
     if (err) {
       console.log(err);
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
       res.send();
     } else {
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
       res.send(data);
     }
   });
@@ -48,8 +52,10 @@ app.get('/product/:productId/addtocart', (req, res) => {
     `, [req.params.productId], (err, data) => {
     if (err) {
       console.log(err);
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
       res.send();
     } else {
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
       res.send(data);
     }
   });
