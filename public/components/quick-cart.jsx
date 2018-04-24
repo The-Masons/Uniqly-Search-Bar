@@ -63,9 +63,6 @@ class QuickCart extends React.Component {
     $.ajax({
       url: `http://localhost:3001/product/${this.props.item}/addtocart`,
       method: 'GET',
-      headers: {
-        'Access-Control-Allow-Origin': true,
-      },
       success: (data) => {
         const newCart = Object.assign({}, this.state.cart);
         const cartKey = this.props.item + ' ' + size;
