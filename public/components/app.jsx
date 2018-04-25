@@ -42,7 +42,6 @@ class App extends React.Component {
     return (
       <div className="App">
         <QuickCart item={this.state.currentItem}/>
-        <ItemPicker items={this.state.items} setCurrentItem={this.setItem}/>
       </div>
     );
   }
