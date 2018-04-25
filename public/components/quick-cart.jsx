@@ -32,7 +32,7 @@ class QuickCart extends React.Component {
 
   getSizesQtys(productId) {
     $.ajax({
-      url: `http://localhost:3001/product/${productId}`,
+      url: `http://localhost:3001/product/${productId}/sizes_qtys`,
       method: 'GET',
       success: (data) => {
         const newSizes = [];
