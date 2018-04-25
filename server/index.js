@@ -26,6 +26,11 @@ app.get('/products', (req, res) => {
 });
 
 app.get('/product/:productId', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.sendFile(path.join(__dirname, '/../client/index.html'));
+});
+
+app.get('/product/:productId/sizes_qtys', (req, res) => {
   db.query(`
     SELECT sizes.size_name, products_sizes.quantity FROM
       (sizes INNER JOIN products_sizes ON sizes.size_id = products_sizes.size_id)

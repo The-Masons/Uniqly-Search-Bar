@@ -20,7 +20,7 @@ class App extends React.Component {
       method: 'GET',
       success: (data) => {
         this.setState({
-          currentItem: data[0].product_id,
+          currentItem: window.location.href.split('/').pop() || data[0].product_id,
           items: data,
         });
       },
@@ -42,7 +42,6 @@ class App extends React.Component {
     return (
       <div className="App">
         <QuickCart item={this.state.currentItem}/>
-        <ItemPicker items={this.state.items} setCurrentItem={this.setItem}/>
       </div>
     );
   }
