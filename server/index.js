@@ -3,6 +3,7 @@ const path = require('path');
 const db = require('../db/index');
 
 const app = express();
+const hostname = process.env.HOSTNAME || 'http://localhost';
 const port = process.env.PORT || 3001;
 
 app.use(express.static(path.join(__dirname, '/../client')));
@@ -16,17 +17,17 @@ app.get('/products', (req, res) => {
     `, [], (err, data) => {
     if (err) {
       console.log(err);
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+      res.setHeader('Access-Control-Allow-Origin', '*');
       res.send();
     } else {
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+      res.setHeader('Access-Control-Allow-Origin', '*');
       res.send(data);
     }
   });
 });
 
 app.get('/product/:productId', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.sendFile(path.join(__dirname, '/../client/index.html'));
 });
 
@@ -38,10 +39,10 @@ app.get('/product/:productId/sizes_qtys', (req, res) => {
     `, [req.params.productId], (err, data) => {
     if (err) {
       console.log(err);
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+      res.setHeader('Access-Control-Allow-Origin', '*');
       res.send();
     } else {
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+      res.setHeader('Access-Control-Allow-Origin', '*');
       res.send(data);
     }
   });
@@ -57,10 +58,10 @@ app.get('/product/:productId/addtocart', (req, res) => {
     `, [req.params.productId], (err, data) => {
     if (err) {
       console.log(err);
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+      res.setHeader('Access-Control-Allow-Origin', '*');
       res.send();
     } else {
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+      res.setHeader('Access-Control-Allow-Origin', '*');
       res.send(data);
     }
   });

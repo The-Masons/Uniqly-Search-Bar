@@ -16,7 +16,7 @@ class App extends React.Component {
 
   componentDidMount() {
     $.ajax({
-      url: 'http://localhost:3001/products',
+      url: `${process.env.HOSTNAME}:${process.env.PORT}/products`,
       method: 'GET',
       success: (data) => {
         this.setState({
