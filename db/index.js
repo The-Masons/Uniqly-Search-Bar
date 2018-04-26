@@ -2,8 +2,8 @@ const Pool = require('pg-pool');
 
 const pool = new Pool({
   user: 'postgres',
-  host: 'localhost',
-  database: 'uniqly',
+  host: process.env.PGHOST,
+  database: process.env.DBNAME,
   password: process.env.PGPASSWORD,
   port: process.env.PGPORT,
 });
