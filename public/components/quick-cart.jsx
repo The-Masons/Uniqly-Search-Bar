@@ -61,7 +61,7 @@ class QuickCart extends React.Component {
 
   addToCart(size, quantity) {
     $.ajax({
-      url: `/product/${this.props.item}/addtocart`,
+      url: `${window.location.href.split('/').shift()}/product/${this.props.item}/addtocart`,
       method: 'GET',
       success: (data) => {
         const newCart = Object.assign({}, this.state.cart);
