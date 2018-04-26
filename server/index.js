@@ -33,7 +33,7 @@ app.get('/product/:productId', (req, res) => {
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'text/html',
   });
-  res.send(`
+  res.send((() => `
     <html>
       <head>
         <meta charset="utf-8">
@@ -49,7 +49,7 @@ app.get('/product/:productId', (req, res) => {
         <script src="${hostname}:${port}/bundle.js"></script>
       </body>
     </html>
-    `);
+    `)());
   res.status(201).end();
 });
 
