@@ -12,9 +12,14 @@ RUN npm install
 
 EXPOSE 3001
 
-ENV DBNAME uniqly
-ENV PGHOST 172.17.0.2
-ENV PGPORT 5432
-ENV PGPASSWORD catsanddogs123
+ARG dbname
+ARG pghost
+ARG pgport
+ARG pgpassword
+
+ENV DBNAME $dbname
+ENV PGHOST $pghost
+ENV PGPORT $pgport
+ENV PGPASSWORD $pgpassword
 
 CMD ["npm","start"]
