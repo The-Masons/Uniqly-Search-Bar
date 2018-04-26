@@ -10,7 +10,8 @@
     "server-dev": "nodemon server/index.js",
     "react-dev": "webpack -d --watch",
     "lint": "eslint ./",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "start": "node server/index.js"
   },
   "jest": {
     "setupFiles": [
