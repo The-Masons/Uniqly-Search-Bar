@@ -19,16 +19,38 @@ app.get('/products', (req, res) => {
       console.log(err);
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.send();
+      res.status(200).end();
     } else {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.send(data);
+      res.status(200).end();
     }
   });
 });
 
 app.get('/product/:productId', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.sendFile(path.join(__dirname, '/../client/index.html'));
+  res.set({
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'text/html',
+  });
+  res.send(`
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <title>Uniqly Quick Cart</title>
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,700" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="${hostname}:${port}/styles.css"></link>
+      </head>
+      <body>
+        <div id="mini-cart-app"></div>
+        <div id="quick-add-app"></div>
+        <div id="quick-cart-app"></div>
+        <div id="app"></div>
+        <script src="${hostname}:${port}/bundle.js"></script>
+      </body>
+    </html>
+    `);
+  res.status(201).end();
 });
 
 app.get('/product/:productId/sizes_qtys', (req, res) => {
@@ -41,9 +63,11 @@ app.get('/product/:productId/sizes_qtys', (req, res) => {
       console.log(err);
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.send();
+      res.status(200).end();
     } else {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.send(data);
+      res.status(200).end();
     }
   });
 });
@@ -60,9 +84,11 @@ app.get('/product/:productId/addtocart', (req, res) => {
       console.log(err);
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.send();
+      res.status(200).end();
     } else {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.send(data);
+      res.status(200).end();
     }
   });
 });

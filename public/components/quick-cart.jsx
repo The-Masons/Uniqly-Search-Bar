@@ -32,7 +32,7 @@ class QuickCart extends React.Component {
 
   getSizesQtys(productId) {
     $.ajax({
-      url: `${process.env.HOSTNAME}:${process.env.PORT}/product/${productId}/sizes_qtys`,
+      url: `/product/${productId}/sizes_qtys`,
       method: 'GET',
       success: (data) => {
         const newSizes = [];
@@ -61,7 +61,7 @@ class QuickCart extends React.Component {
 
   addToCart(size, quantity) {
     $.ajax({
-      url: `${process.env.HOSTNAME}:${process.env.PORT}/product/${this.props.item}/addtocart`,
+      url: `/product/${this.props.item}/addtocart`,
       method: 'GET',
       success: (data) => {
         const newCart = Object.assign({}, this.state.cart);
