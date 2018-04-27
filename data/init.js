@@ -2,11 +2,13 @@ const Pool = require('pg-pool');
 
 const pool = new Pool({
   user: 'postgres',
-  host: 'localhost',
-  database: 'uniqly',
+  host: process.env.PGHOST,
+  database: process.env.DBNAME,
   password: process.env.PGPASSWORD,
   port: process.env.PGPORT,
 });
+
+console.log(`Pool connected to ${process.env.PGHOST}:${process.env.PGPORT}`);
 
 pool.on('error', (err) => {
   console.error('Unexpected error on idle client', err);
@@ -176,19 +178,21 @@ const populateProdsSizes = (numProds, numSizes) => {
   })());
 };
 
-// Uncomment to generate data (conflicts with tests)
-// createTables()
-//   .then(() => populateTwoField('name', 'Product Name', 25))
-//   .then(() => populateTwoField('color', 'Color', 4))
-//   .then(() => populateTwoField('size', 'Size', 5))
-//   .then(() => populateProducts(25, 4))
-//   .then(() => populateImages(100))
-//   .then(() => populateProdsSizes(100, 5))
-//   .then(() => console.log('All tables populated'))
-//   .catch(err => console.log(err));
+const initDB = () => {
+  return createTables()
+    .then(() => populateTwoField('name', 'Product Name', 25))
+    .then(() => populateTwoField('color', 'Color', 4))
+    .then(() => populateTwoField('size', 'Size', 5))
+    .then(() => populateProducts(25, 4))
+    .then(() => populateImages(100))
+    .then(() => populateProdsSizes(100, 5))
+    .then(() => console.log('All tables populated'))
+    .catch(err => console.log(err));
+}
 
 module.exports.createTables = createTables;
 module.exports.populateTwoField = populateTwoField;
 module.exports.populateProducts = populateProducts;
 module.exports.populateImages = populateImages;
 module.exports.populateProdsSizes = populateProdsSizes;
+module.exports.initDB = initDB;
