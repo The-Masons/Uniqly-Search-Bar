@@ -34,10 +34,16 @@ app.get('/products', (req, res) => {
     `, [], (err, data) => {
     if (err) {
       console.log(err);
-      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.set({
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      });
       res.status(500).send();
     } else {
-      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.set({
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      });
       res.status(200).send(data);
     }
   });
@@ -59,10 +65,16 @@ app.get('/product/:productId/sizes_qtys', (req, res) => {
     `, [req.params.productId], (err, data) => {
     if (err) {
       console.log(err);
-      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.set({
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      });
       res.status(500).send();
     } else {
-      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.set({
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      });
       res.status(200).send(data);
     }
   });
@@ -78,10 +90,16 @@ app.get('/product/:productId/addtocart', (req, res) => {
     `, [req.params.productId], (err, data) => {
     if (err) {
       console.log(err);
-      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.set({
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      });
       res.status(500).send();
     } else {
-      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.set({
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      });
       res.status(200).send(data);
     }
   });
