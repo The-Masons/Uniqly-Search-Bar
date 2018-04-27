@@ -35,13 +35,13 @@ app.get('/products', (req, res) => {
     if (err) {
       console.log(err);
       res.set({
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': `http://${hostname}`,
         'Content-Type': 'application/json',
       });
       res.status(500).send();
     } else {
       res.set({
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': `http://${hostname}`,
         'Content-Type': 'application/json',
       });
       res.status(200).send(data);
@@ -51,7 +51,7 @@ app.get('/products', (req, res) => {
 
 app.get('/product/:productId', (req, res) => {
   res.set({
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': `http://${hostname}`,
     'Content-Type': 'text/html',
   });
   res.status(302).sendFile(path.join(__dirname, '/../client/index.html'));
@@ -66,13 +66,13 @@ app.get('/product/:productId/sizes_qtys', (req, res) => {
     if (err) {
       console.log(err);
       res.set({
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': `http://${hostname}`,
         'Content-Type': 'application/json',
       });
       res.status(500).send();
     } else {
       res.set({
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': `http://${hostname}`,
         'Content-Type': 'application/json',
       });
       res.status(200).send(data);
@@ -91,13 +91,13 @@ app.get('/product/:productId/addtocart', (req, res) => {
     if (err) {
       console.log(err);
       res.set({
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': `http://${hostname}`,
         'Content-Type': 'application/json',
       });
       res.status(500).send();
     } else {
       res.set({
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': `http://${hostname}`,
         'Content-Type': 'application/json',
       });
       res.status(200).send(data);
