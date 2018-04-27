@@ -7,19 +7,10 @@ COPY package-lock.json /quick-cart/
 COPY db /quick-cart/db/
 COPY client /quick-cart/client/
 COPY server /quick-cart/server/
+COPY data /quick-cart/data/
 
 RUN npm install
 
 EXPOSE 3001
-
-ARG dbname
-ARG pghost
-ARG pgport
-ARG pgpassword
-
-ENV DBNAME $dbname
-ENV PGHOST $pghost
-ENV PGPORT $pgport
-ENV PGPASSWORD $pgpassword
 
 CMD ["npm","start"]

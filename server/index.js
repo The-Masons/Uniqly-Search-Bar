@@ -1,12 +1,29 @@
 const express = require('express');
 const path = require('path');
 const db = require('../db/index');
+const data = require('../data/init');
 
 const app = express();
 const hostname = process.env.HOSTNAME || 'http://localhost';
 const port = process.env.PORT || 3001;
+let dbPopulated = false;
 
 app.use(express.static(path.join(__dirname, '/../client')));
+app.use((req, res, next) => {
+  if (!dbPopulated) {
+    data.initDB()
+      .then(() => {
+        dbPopulated = true;
+        next();
+      })
+      .catch(err => {
+        console.log(err);
+        next();
+      });
+  } else {
+    next();
+  }
+});
 
 app.get('/products', (req, res) => {
   db.query(`
@@ -18,7 +35,7 @@ app.get('/products', (req, res) => {
     if (err) {
       console.log(err);
       res.setHeader('Access-Control-Allow-Origin', '*');
-      res.status(200).send();
+      res.status(500).send();
     } else {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.status(200).send(data);
@@ -31,23 +48,6 @@ app.get('/product/:productId', (req, res) => {
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'text/html',
   });
-  // res.status(302).send((() => `
-  //   <html>
-  //     <head>
-  //       <meta charset="utf-8">
-  //       <title>Uniqly Quick Cart</title>
-  //       <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,700" rel="stylesheet">
-  //       <link rel="stylesheet" type="text/css" href="${hostname}:${port}/styles.css"></link>
-  //     </head>
-  //     <body>
-  //       <div id="mini-cart-app"></div>
-  //       <div id="quick-add-app"></div>
-  //       <div id="quick-cart-app"></div>
-  //       <div id="app"></div>
-  //       <script src="${hostname}:${port}/bundle.js"></script>
-  //     </body>
-  //   </html>
-  //   `)());
   res.status(302).sendFile(path.join(__dirname, '/../client/index.html'));
 });
 
@@ -60,7 +60,7 @@ app.get('/product/:productId/sizes_qtys', (req, res) => {
     if (err) {
       console.log(err);
       res.setHeader('Access-Control-Allow-Origin', '*');
-      res.status(200).send();
+      res.status(500).send();
     } else {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.status(200).send(data);
@@ -79,7 +79,7 @@ app.get('/product/:productId/addtocart', (req, res) => {
     if (err) {
       console.log(err);
       res.setHeader('Access-Control-Allow-Origin', '*');
-      res.status(200).send();
+      res.status(500).send();
     } else {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.status(200).send(data);
@@ -88,5 +88,5 @@ app.get('/product/:productId/addtocart', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
+  console.log(`App listening on ${hostname}:${port}`);
 });
