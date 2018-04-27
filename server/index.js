@@ -16,7 +16,10 @@ app.use((req, res, next) => {
         dbPopulated = true;
         next();
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        next();
+      });
   } else {
     next();
   }
