@@ -52,7 +52,6 @@ app.get('/products', (req, res) => {
 app.get('/product/:productId', (req, res) => {
   res.set({
     'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'text/html',
   });
   res.status(302).sendFile(path.join(__dirname, '/../client/index.html'));
 });
