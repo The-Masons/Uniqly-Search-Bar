@@ -1,12 +1,12 @@
 const jquery = {};
 
 const ajax = jest.fn((options) => {
-  if (options.url === 'product/0') {
+  if (options.url === '/product/0/sizes_qtys') {
     options.success.call(null, [
       { size_name: 'Fake Size Foo', quantity: 42 },
       { size_name: 'Fake Size Bar', quantity: 42 },
     ]);
-  } else if (options.url === 'product/0/addtocart') {
+  } else if (options.url === '/product/0/addtocart') {
     options.success.call(null, [
       {
         name_name: 'Fake Product',

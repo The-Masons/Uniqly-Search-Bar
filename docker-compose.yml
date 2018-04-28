@@ -11,6 +11,7 @@ services:
       PGHOST: db
       PGPORT: 5432
       DBNAME: uniqly
+      HOSTNAME: 172.17.0.1
     depends_on:
       - db
     ports:

@@ -1,57 +1,25 @@
 const express = require('express');
 const path = require('path');
 const db = require('../db/index');
-const data = require('../data/init');
+const mockData = require('../data/init');
 
 const app = express();
-const hostname = process.env.HOSTNAME || 'http://localhost';
+const hostname = `http://${process.env.HOSTNAME}` || 'http://localhost';
 const port = process.env.PORT || 3001;
-let dbPopulated = false;
+
+let seederCalled = false;
+const dbSeeder = () => {
+  if (!seederCalled) {
+    seederCalled = true;
+    mockData.initDB().catch(err => console.log(err));
+  }
+};
 
 app.use(express.static(path.join(__dirname, '/../client')));
-app.use((req, res, next) => {
-  if (!dbPopulated) {
-    data.initDB()
-      .then(() => {
-        dbPopulated = true;
-        next();
-      })
-      .catch(err => {
-        console.log(err);
-        next();
-      });
-  } else {
-    next();
-  }
-});
-
-app.get('/products', (req, res) => {
-  db.query(`
-    SELECT names.name_name, colors.color_name, products.product_id FROM
-      (products INNER JOIN names ON products.name_id = names.name_id)
-      INNER JOIN colors ON products.color_id = colors.color_id
-      ORDER BY products.product_id;
-    `, [], (err, data) => {
-    if (err) {
-      console.log(err);
-      res.set({
-        'Access-Control-Allow-Origin': `http://${hostname}`,
-        'Content-Type': 'application/json',
-      });
-      res.status(500).send();
-    } else {
-      res.set({
-        'Access-Control-Allow-Origin': `http://${hostname}`,
-        'Content-Type': 'application/json',
-      });
-      res.status(200).send(data);
-    }
-  });
-});
 
 app.get('/product/:productId', (req, res) => {
   res.set({
-    'Access-Control-Allow-Origin': `http://${hostname}`,
+    'Access-Control-Allow-Origin': hostname,
     'Content-Type': 'text/html',
   });
   res.status(302).sendFile(path.join(__dirname, '/../client/index.html'));
@@ -64,15 +32,26 @@ app.get('/product/:productId/sizes_qtys', (req, res) => {
       WHERE products_sizes.product_id = $1 ORDER BY sizes.size_name;
     `, [req.params.productId], (err, data) => {
     if (err) {
-      console.log(err);
-      res.set({
-        'Access-Control-Allow-Origin': `http://${hostname}`,
-        'Content-Type': 'application/json',
-      });
-      res.status(500).send();
+      console.log('Seeding database...');
+      if (err.code === '42P01') {
+        res.set({
+          'Access-Control-Allow-Origin': hostname,
+          'Content-Type': 'application/json',
+        });
+        res.status(200).send([{ size_name: 'Database Seeding...', quantity: 0 }]);
+        dbSeeder();
+      } else {
+        console.log(err);
+        res.set({
+          'Access-Control-Allow-Origin': hostname,
+          'Content-Type': 'application/json',
+        });
+        res.status(500).send();
+      }
     } else {
+      seederCalled = false;
       res.set({
-        'Access-Control-Allow-Origin': `http://${hostname}`,
+        'Access-Control-Allow-Origin': hostname,
         'Content-Type': 'application/json',
       });
       res.status(200).send(data);
@@ -89,15 +68,26 @@ app.get('/product/:productId/addtocart', (req, res) => {
       WHERE products.product_id = $1 AND images.isPrimary = true;
     `, [req.params.productId], (err, data) => {
     if (err) {
-      console.log(err);
-      res.set({
-        'Access-Control-Allow-Origin': `http://${hostname}`,
-        'Content-Type': 'application/json',
-      });
-      res.status(500).send();
+      if (err.code === '42P01') {
+        console.log('Seeding database...');
+        res.set({
+          'Access-Control-Allow-Origin': hostname,
+          'Content-Type': 'application/json',
+        });
+        res.status(200).send([{ size_name: 'Database Seeding...', quantity: 0 }]);
+        dbSeeder();
+      } else {
+        console.log(err);
+        res.set({
+          'Access-Control-Allow-Origin': hostname,
+          'Content-Type': 'application/json',
+        });
+        res.status(500).send();
+      }
     } else {
+      seederCalled = false;
       res.set({
-        'Access-Control-Allow-Origin': `http://${hostname}`,
+        'Access-Control-Allow-Origin': hostname,
         'Content-Type': 'application/json',
       });
       res.status(200).send(data);
