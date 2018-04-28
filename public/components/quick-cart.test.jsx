@@ -1,14 +1,15 @@
 import React from 'react';
 import $ from 'jquery';
 import QuickCart from './quick-cart.jsx';
-
 jest.mock('jquery');
+
+QuickCart.prototype.renderComponents = jest.fn();
 
 describe('QuickCart', () => {
   describe('getSizesQtys', () => {
     test('should load data from the db on page load', () => {
       const spy = jest.spyOn(QuickCart.prototype, 'getSizesQtys');
-      const quickCart = mount(<QuickCart item={0}/>);
+      const quickCart = mount(<QuickCart />);
 
       expect(spy).toHaveBeenCalledTimes(1);
 
@@ -16,7 +17,7 @@ describe('QuickCart', () => {
     });
 
     test('should set state when a didMount request succeeds', () => {
-      const quickCart = mount(<QuickCart item={0}/>);
+      const quickCart = mount(<QuickCart />);
 
       expect(quickCart.state('sizes')).toEqual(['Fake Size Foo', 'Fake Size Bar']);
       expect(quickCart.state('quantities')).toEqual({
@@ -26,7 +27,7 @@ describe('QuickCart', () => {
     });
 
     test('should set state when a didMount request fails', () => {
-      const quickCart = mount(<QuickCart item={0}/>);
+      const quickCart = mount(<QuickCart />);
 
       quickCart.instance().getSizesQtys(42);
 
@@ -35,7 +36,7 @@ describe('QuickCart', () => {
     });
 
     test('should update cart when a new item is added', () => {
-      const quickCart = mount(<QuickCart item={0}/>);
+      const quickCart = mount(<QuickCart />);
 
       quickCart.instance().addToCart('Size 0', 1);
 
@@ -56,7 +57,7 @@ describe('QuickCart', () => {
   });
 
   test('should update cart when an existing item is added', () => {
-    const quickCart = mount(<QuickCart item={0}/>);
+    const quickCart = mount(<QuickCart />);
 
     quickCart.instance().addToCart('Size 0', 1);
     quickCart.instance().addToCart('Size 0', 1);

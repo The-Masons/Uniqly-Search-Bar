@@ -9,7 +9,7 @@ class QuickCart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: window.location.href.split('/').pop(),
+      item: parseInt(window.location.href.split('/').pop()) || 0,
       sizes: [],
       quantities: {},
       cart: {},
@@ -57,7 +57,7 @@ class QuickCart extends React.Component {
 
   addToCart(size, quantity) {
     $.ajax({
-      url: `${window.location.href.split('/').shift()}/product/${this.state.item}/addtocart`,
+      url: `/product/${this.state.item}/addtocart`,
       method: 'GET',
       success: (data) => {
         const newCart = Object.assign({}, this.state.cart);
