@@ -37,10 +37,10 @@ describe('QuickAdd', () => {
       }}/>
     );
 
-    expect(quickAdd.find('.quickadd-select-quantity').children().length).toEqual(99);
-    quickAdd.find('.quickadd-select-sizes').simulate('change', {target: {form: [{value: 'Fake Size 0'}]}});
-    expect(quickAdd.state('currentSize')).toEqual('Fake Size 0');
     expect(quickAdd.find('.quickadd-select-quantity').children().length).toEqual(10);
+    quickAdd.find('.quickadd-select-sizes').simulate('change', {target: {form: [{value: 'Fake Size 2'}]}});
+    expect(quickAdd.state('currentSize')).toEqual('Fake Size 2');
+    expect(quickAdd.find('.quickadd-select-quantity').children().length).toEqual(12);
   });
 
   test('should add an item to the cart when "ADD TO BAG" is clicked', () => {

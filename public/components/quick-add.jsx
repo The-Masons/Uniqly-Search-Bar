@@ -4,9 +4,9 @@ class QuickAdd extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentSize: '',
-      currentQty: '',
-      buttonClass: 'quickadd-btn',
+      currentSize: this.props.sizes[0],
+      currentQty: this.props.quantities[this.props.sizes[0]][0],
+      buttonClass: this.props.quantities[this.props.sizes[0]] > 0 ? 'quickadd-btn' : 'quickadd-btn disabled',
     };
 
     this.handleSelect = this.handleSelect.bind(this);
