@@ -5,7 +5,7 @@ class QuickAdd extends React.Component {
     super(props);
     this.state = {
       currentSize: this.props.sizes[0],
-      currentQty: this.props.quantities[this.props.sizes[0]][0],
+      currentQty: this.props.quantities[this.props.sizes[0]] > 0 ? 1 : 'Out of Stock',
       buttonClass: this.props.quantities[this.props.sizes[0]] > 0 ? 'quickadd-btn' : 'quickadd-btn disabled',
     };
 
@@ -14,28 +14,25 @@ class QuickAdd extends React.Component {
   }
 
   handleSelect(e) {
-    let newBtnClass = '';
-    let newQty = '';
+    const newSize = e.target.form[0].value;
+    const newButtonClass = this.props.quantities[newSize] > 0 ? 'quickadd-btn' : 'quickadd-btn disabled';
 
-    if (this.props.quantities[e.target.form[0].value] < 1) {
-      newBtnClass = 'quickadd-btn disabled';
-      newQty = 'Out of Stock';
-    } else {
-      newBtnClass = 'quickadd-btn';
-      newQty = 1;
+    let newQty = e.target.form[1].value;
+    if (e.target.classList[1] === 'quickadd-select-sizes') {
+      newQty = this.props.quantities[newSize] > 0 ? 1 : 'Out of Stock';
     }
 
     this.setState({
-      currentSize: e.target.form[0].value,
+      currentSize: newSize,
       currentQty: newQty,
-      buttonClass: newBtnClass,
+      buttonClass: newButtonClass,
     });
   }
 
   handleAdd(e) {
     e.preventDefault();
-    const size = e.target.form[0].value;
-    const qty = e.target.form[1].value;
+    const size = this.state.currentSize;
+    const qty = this.state.currentQty;
     if (qty !== 'Out of Stock') {
       this.props.addToCart(size, qty);
     }
@@ -69,10 +66,14 @@ class QuickAdd extends React.Component {
           <div className="quickadd-select">
             <select
               className="quickadd-dropdown quickadd-select-sizes"
-              onChange={this.handleSelect}>
+              onChange={this.handleSelect}
+              value={this.state.currentSize}>
               {this.generateSizes(this.props.sizes)}
             </select>
-            <select className="quickadd-dropdown quickadd-select-quantity">
+            <select
+              className="quickadd-dropdown quickadd-select-quantity"
+              onChange={this.handleSelect}
+              value={this.state.currentQty}>
               {this.generateQtys(this.state.currentSize)}
             </select>
           </div>
