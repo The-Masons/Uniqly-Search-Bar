@@ -6,7 +6,7 @@ const data = require('../data/init');
 const app = express();
 const hostname = process.env.HOSTNAME || 'http://localhost';
 const port = process.env.PORT || 3001;
-let dbPopulated = false;
+let dbPopulated = process.env.DBEXISTS || false;
 
 app.use(express.static(path.join(__dirname, '/../client')));
 app.use((req, res, next) => {
