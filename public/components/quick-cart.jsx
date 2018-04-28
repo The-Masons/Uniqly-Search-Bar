@@ -68,7 +68,7 @@ class QuickCart extends React.Component {
           this.setState({
             cart: newCart,
             cartSize: newCartSize,
-          });
+          }, () => this.renderComponents());
         } else {
           newCart[cartKey] = {
             id: this.state.item,
@@ -86,7 +86,7 @@ class QuickCart extends React.Component {
             cart: newCart,
             cartSize: newCartSize,
             cartOrder: newOrder,
-          });
+          }, () => this.renderComponents());
         }
       },
       error: (err) => {
