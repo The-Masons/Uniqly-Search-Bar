@@ -17,6 +17,7 @@ class QuickCart extends React.Component {
       cartSize: 0,
     };
 
+    this.renderComponents = this.renderComponents.bind(this);
     this.getSizesQtys = this.getSizesQtys.bind(this);
     this.addToCart= this.addToCart.bind(this);
   }
@@ -40,22 +41,7 @@ class QuickCart extends React.Component {
           currentItem: productId,
           sizes: newSizes,
           quantities: newQuantities,
-        }, () => {
-          ReactDOM.render(
-            <MiniCart
-              cart={this.state.cart}
-              cartSize={this.state.cartSize}
-              cartOrder={this.state.cartOrder}
-              getNewPage={this.getSizesQtys}
-              />, document.getElementById('mini-cart-app'));
-
-          ReactDOM.render(
-            <QuickAdd
-              sizes={this.state.sizes}
-              quantities={this.state.quantities}
-              addToCart={this.addToCart}
-              />, document.getElementById('quick-add-app'));
-        });
+        }, () => this.renderComponents());
       },
       error: (err) => {
         this.setState({
@@ -63,7 +49,7 @@ class QuickCart extends React.Component {
           quantities: {
             ERROR: -1,
           },
-        });
+        }, () => this.renderComponents());
         console.log('Error', err);
       },
     });
@@ -107,6 +93,23 @@ class QuickCart extends React.Component {
         console.log('Error', err);
       },
     });
+  }
+
+  renderComponents() {
+    ReactDOM.render(
+      <MiniCart
+        cart={this.state.cart}
+        cartSize={this.state.cartSize}
+        cartOrder={this.state.cartOrder}
+        getNewPage={this.getSizesQtys}
+        />, document.getElementById('mini-cart-app'));
+
+    ReactDOM.render(
+      <QuickAdd
+        sizes={this.state.sizes}
+        quantities={this.state.quantities}
+        addToCart={this.addToCart}
+        />, document.getElementById('quick-add-app'));
   }
 
   render() {
