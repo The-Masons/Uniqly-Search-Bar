@@ -7,7 +7,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentItem: -1,
+      currentItem: window.location.href.split('/').pop(),
       items: [],
     };
 
