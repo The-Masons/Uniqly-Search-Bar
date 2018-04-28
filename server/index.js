@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const db = require('../db/index');
-const data = require('../data/init');
+const mockData = require('../data/init');
 
 const app = express();
 const hostname = `http://${process.env.HOSTNAME}` || 'http://localhost';
@@ -11,10 +11,7 @@ let seederCalled = false;
 const dbSeeder = () => {
   if (!seederCalled) {
     seederCalled = true;
-    data.initDB()
-      .catch(err => {
-        console.log(err);
-      });
+    mockData.initDB().catch(err => console.log(err));
   }
 };
 

@@ -176,8 +176,8 @@ const populateProdsSizes = (numProds, numSizes) => {
   })());
 };
 
-const initDB = () => {
-  return createTables()
+const initDB = () =>
+  createTables()
     .then(() => populateTwoField('name', 'Product Name', 25))
     .then(() => populateTwoField('color', 'Color', 4))
     .then(() => populateTwoField('size', 'Size', 5))
@@ -186,7 +186,6 @@ const initDB = () => {
     .then(() => populateProdsSizes(100, 5))
     .then(() => console.log('All tables populated'))
     .catch(err => console.log(err));
-}
 
 module.exports.createTables = createTables;
 module.exports.populateTwoField = populateTwoField;

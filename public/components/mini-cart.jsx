@@ -38,12 +38,12 @@ class MiniCart extends React.Component {
 
     if (isImmediate) {
       this.setState({
-        viewClass: this.state.viewClass + ' hidden',
+        viewClass: `${this.state.viewClass} hidden`,
         timeoutID: '',
       });
     } else {
       const newTimeoutID = setTimeout(() => this.setState({
-        viewClass: this.state.viewClass + ' hidden',
+        viewClass: `${this.state.viewClass} hidden`,
       }), 5000);
 
       this.setState({
@@ -67,7 +67,7 @@ class MiniCart extends React.Component {
       for (let i = 0; i < this.props.cartOrder.length; i += 1) {
         const currItem = this.props.cartOrder[i];
         newCart.push(
-          <div className="cart-item" key={'cartItem' + i}>
+          <div className="cart-item" key={`cartItem${i}`}>
             <img className="cart-item-img" src={this.props.cart[currItem].imgUrl}/>
             <div className="cart-item-info">
               <span

@@ -42,7 +42,7 @@ class QuickAdd extends React.Component {
     const results = [];
     for (let i = 0; i < sizes.length; i += 1) {
       results.push(
-        <option key={'sizeOpt' + i}>{sizes[i]}</option>
+        <option key={`sizeOpt${i}`}>{sizes[i]}</option>
       );
     }
     return results;
@@ -53,7 +53,7 @@ class QuickAdd extends React.Component {
     const quantity = this.props.quantities[currSize] < 99 ? this.props.quantities[currSize] : 99;
     for (let i = 0; i < quantity; i += 1) {
       results.push(
-        <option key={'qtyOpt' + i}>{i + 1}</option>
+        <option key={`qtyOpt${i}`}>{i + 1}</option>
       );
     }
     return results.length > 0 ? results : <option>Out of Stock</option>;
