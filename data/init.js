@@ -8,8 +8,6 @@ const pool = new Pool({
   port: process.env.PGPORT,
 });
 
-console.log(`Pool connected to ${process.env.PGHOST}:${process.env.PGPORT}`);
-
 pool.on('error', (err) => {
   console.error('Unexpected error on idle client', err);
   process.exit(-1);
