@@ -4,7 +4,7 @@ const db = require('../db/index');
 const data = require('../data/init');
 
 const app = express();
-const hostname = process.env.HOSTNAME || 'http://localhost';
+const hostname = `http://${process.env.HOSTNAME}` || 'http://localhost';
 const port = process.env.PORT || 3001;
 
 let seederCalled = false;
@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, '/../client')));
 
 app.get('/product/:productId', (req, res) => {
   res.set({
-    'Access-Control-Allow-Origin': `http://${hostname}`,
+    'Access-Control-Allow-Origin': hostname,
     'Content-Type': 'text/html',
   });
   res.status(302).sendFile(path.join(__dirname, '/../client/index.html'));
@@ -38,7 +38,7 @@ app.get('/product/:productId/sizes_qtys', (req, res) => {
       console.log('Seeding database...');
       if (err.code === '42P01') {
         res.set({
-          'Access-Control-Allow-Origin': `http://${hostname}`,
+          'Access-Control-Allow-Origin': hostname,
           'Content-Type': 'application/json',
         });
         res.status(200).send([{ size_name: 'Database Seeding...', quantity: 0 }]);
@@ -46,7 +46,7 @@ app.get('/product/:productId/sizes_qtys', (req, res) => {
       } else {
         console.log(err);
         res.set({
-          'Access-Control-Allow-Origin': `http://${hostname}`,
+          'Access-Control-Allow-Origin': hostname,
           'Content-Type': 'application/json',
         });
         res.status(500).send();
@@ -54,7 +54,7 @@ app.get('/product/:productId/sizes_qtys', (req, res) => {
     } else {
       seederCalled = false;
       res.set({
-        'Access-Control-Allow-Origin': `http://${hostname}`,
+        'Access-Control-Allow-Origin': hostname,
         'Content-Type': 'application/json',
       });
       res.status(200).send(data);
@@ -74,7 +74,7 @@ app.get('/product/:productId/addtocart', (req, res) => {
       if (err.code === '42P01') {
         console.log('Seeding database...');
         res.set({
-          'Access-Control-Allow-Origin': `http://${hostname}`,
+          'Access-Control-Allow-Origin': hostname,
           'Content-Type': 'application/json',
         });
         res.status(200).send([{ size_name: 'Database Seeding...', quantity: 0 }]);
@@ -82,7 +82,7 @@ app.get('/product/:productId/addtocart', (req, res) => {
       } else {
         console.log(err);
         res.set({
-          'Access-Control-Allow-Origin': `http://${hostname}`,
+          'Access-Control-Allow-Origin': hostname,
           'Content-Type': 'application/json',
         });
         res.status(500).send();
@@ -90,7 +90,7 @@ app.get('/product/:productId/addtocart', (req, res) => {
     } else {
       seederCalled = false;
       res.set({
-        'Access-Control-Allow-Origin': `http://${hostname}`,
+        'Access-Control-Allow-Origin': hostname,
         'Content-Type': 'application/json',
       });
       res.status(200).send(data);
