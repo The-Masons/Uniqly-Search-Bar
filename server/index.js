@@ -25,30 +25,6 @@ app.use((req, res, next) => {
   }
 });
 
-app.get('/products', (req, res) => {
-  db.query(`
-    SELECT names.name_name, colors.color_name, products.product_id FROM
-      (products INNER JOIN names ON products.name_id = names.name_id)
-      INNER JOIN colors ON products.color_id = colors.color_id
-      ORDER BY products.product_id;
-    `, [], (err, data) => {
-    if (err) {
-      console.log(err);
-      res.set({
-        'Access-Control-Allow-Origin': `http://${hostname}`,
-        'Content-Type': 'application/json',
-      });
-      res.status(500).send();
-    } else {
-      res.set({
-        'Access-Control-Allow-Origin': `http://${hostname}`,
-        'Content-Type': 'application/json',
-      });
-      res.status(200).send(data);
-    }
-  });
-});
-
 app.get('/product/:productId', (req, res) => {
   res.set({
     'Access-Control-Allow-Origin': `http://${hostname}`,

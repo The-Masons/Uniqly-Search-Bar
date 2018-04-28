@@ -9,6 +9,7 @@ class QuickCart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      item: window.location.href.split('/').pop(),
       sizes: [],
       quantities: {},
       cart: {},
@@ -21,13 +22,7 @@ class QuickCart extends React.Component {
   }
 
   componentDidMount() {
-    this.getSizesQtys(this.props.item);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.item !== this.props.item) {
-      this.getSizesQtys(this.props.item);
-    }
+    this.getSizesQtys(this.state.item);
   }
 
   getSizesQtys(productId) {
@@ -45,6 +40,21 @@ class QuickCart extends React.Component {
           currentItem: productId,
           sizes: newSizes,
           quantities: newQuantities,
+        }, () => {
+          ReactDOM.render(
+            <MiniCart
+              cart={this.state.cart}
+              cartSize={this.state.cartSize}
+              cartOrder={this.state.cartOrder}
+              getNewPage={this.getSizesQtys}
+              />, document.getElementById('mini-cart-app'));
+
+          ReactDOM.render(
+            <QuickAdd
+              sizes={this.state.sizes}
+              quantities={this.state.quantities}
+              addToCart={this.addToCart}
+              />, document.getElementById('quick-add-app'));
         });
       },
       error: (err) => {
@@ -61,11 +71,11 @@ class QuickCart extends React.Component {
 
   addToCart(size, quantity) {
     $.ajax({
-      url: `${window.location.href.split('/').shift()}/product/${this.props.item}/addtocart`,
+      url: `${window.location.href.split('/').shift()}/product/${this.state.item}/addtocart`,
       method: 'GET',
       success: (data) => {
         const newCart = Object.assign({}, this.state.cart);
-        const cartKey = this.props.item + ' ' + size;
+        const cartKey = this.state.item + ' ' + size;
         if (this.state.cart.hasOwnProperty(cartKey)) {
           newCart[cartKey].quantity += parseInt(quantity);
           const newCartSize = this.state.cartSize + parseInt(quantity);
@@ -75,7 +85,7 @@ class QuickCart extends React.Component {
           });
         } else {
           newCart[cartKey] = {
-            id: this.props.item,
+            id: this.state.item,
             name: data[0].name_name,
             color: data[0].color_name,
             quantity: parseInt(quantity),
@@ -100,37 +110,6 @@ class QuickCart extends React.Component {
   }
 
   render() {
-    // I know this isn't best practice but it's a weird workaround for the proxy server
-    // Normally, this function would look like this:
-    // return(
-    //   <div className="quickCart">
-    //     <MiniCart
-    //       cart={this.state.cart}
-    //       cartSize={this.state.cartSize}
-    //       cartOrder={this.state.cartOrder}
-    //       getNewPage={this.getSizesQtys}/>
-    //     <QuickAdd
-    //       sizes={this.state.sizes}
-    //       quantities={this.state.quantities}
-    //       addToCart={this.addToCart}/>
-    //   </div>
-    // );
-    //
-    ReactDOM.render(
-      <MiniCart
-        cart={this.state.cart}
-        cartSize={this.state.cartSize}
-        cartOrder={this.state.cartOrder}
-        getNewPage={this.getSizesQtys}
-        />, document.getElementById('mini-cart-app'));
-
-    ReactDOM.render(
-      <QuickAdd
-        sizes={this.state.sizes}
-        quantities={this.state.quantities}
-        addToCart={this.addToCart}
-        />, document.getElementById('quick-add-app'));
-
     return(
       <div className="quickCart"></div>
     );
